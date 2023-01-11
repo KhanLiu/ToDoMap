@@ -16,3 +16,7 @@ This app is the course project of the <Mobile Cartography> course within the fra
 - [ ] customized design
 - [ ] integration of images
 - [ ] multi-language
+
+
+# Google Map API
+MAPS_API_KEY=AIzaSyCCxIZOTd3MpxLhMQAVU4RJjcXyX8Iztcg
