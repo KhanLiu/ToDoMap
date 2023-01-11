@@ -18,5 +18,18 @@ This app is the course project of the <Mobile Cartography> course within the fra
 - [ ] multi-language
 
 
-# Google Map API
+#### Google Map API
 MAPS_API_KEY=AIzaSyCCxIZOTd3MpxLhMQAVU4RJjcXyX8Iztcg
+
+#### Development Log
+
+- branch dev_sql
+  - SQLite 
+    - DatabaseHelper // Create, Update table (only one table now)
+    - DBManager // CRUD
+    - Todo: table scheme
+  - TaskView
+    - TaskViewActivity // main task view
+    - AddTaskActivity // add task btn from top-right menu, and pop up add task window (should be popup)
+    - ModifyActivity // update or delete task window (should be popup)
+    - Todo: implement popup window, modify interface
