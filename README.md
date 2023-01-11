@@ -27,9 +27,10 @@ MAPS_API_KEY=AIzaSyCCxIZOTd3MpxLhMQAVU4RJjcXyX8Iztcg
   - SQLite 
     - DatabaseHelper // Create, Update table (only one table now)
     - DBManager // CRUD
-    - Todo: table scheme
+    - Task table scheme (Id, title, type, time, address, desc, status), type needs update
   - TaskView
     - TaskViewActivity // main task view
     - AddTaskActivity // add task btn from top-right menu, and pop up add task window (should be popup)
     - ModifyActivity // update or delete task window (should be popup)
-    - Todo: implement popup window, modify interface
+    - Todo: implement popup window, improve interface
+

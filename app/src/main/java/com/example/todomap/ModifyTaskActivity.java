@@ -9,9 +9,16 @@ import android.widget.EditText;
 
 public class ModifyTaskActivity extends Activity implements View.OnClickListener {
 
-    private EditText titleText;
+
+    private EditText titleEditText;
+    private EditText typeEditText;
+    private EditText timeEditText;
+    private EditText addressEditText;
+    private EditText descEditText;
+    private EditText statusEditText;
+
     private Button updateBtn, deleteBtn;
-    private EditText descText;
+
 
     private long _id;
 
@@ -28,21 +35,36 @@ public class ModifyTaskActivity extends Activity implements View.OnClickListener
         dbManager = new DBManager(this);
         dbManager.open();
 
-        titleText = (EditText) findViewById(R.id.subject_edittext);
-        descText = (EditText) findViewById(R.id.description_edittext);
+        titleEditText = (EditText) findViewById(R.id.title_edittext);
+        typeEditText = (EditText) findViewById(R.id.type_edittext);
+        timeEditText = (EditText) findViewById(R.id.time_edittext);
+        addressEditText = (EditText) findViewById(R.id.address_edittext);
+        descEditText = (EditText) findViewById(R.id.desc_edittext);
+        statusEditText = (EditText) findViewById(R.id.status_edittext);
 
         updateBtn = (Button) findViewById(R.id.btn_update);
         deleteBtn = (Button) findViewById(R.id.btn_delete);
 
         Intent intent = getIntent();
+
         String id = intent.getStringExtra("id");
-        String name = intent.getStringExtra("title");
+        String title = intent.getStringExtra("title");
+        String type = intent.getStringExtra("type");
+        String time = intent.getStringExtra("time");
+        String address = intent.getStringExtra("address");
         String desc = intent.getStringExtra("desc");
+        String status = intent.getStringExtra("status");
+
 
         _id = Long.parseLong(id);
 
-        titleText.setText(name);
-        descText.setText(desc);
+        titleEditText.setText(title);
+        typeEditText.setText(type);
+        timeEditText.setText(time);
+        addressEditText.setText(address);
+        descEditText.setText(desc);
+        statusEditText.setText(status);
+
 
         updateBtn.setOnClickListener(this);
         deleteBtn.setOnClickListener(this);
@@ -52,10 +74,15 @@ public class ModifyTaskActivity extends Activity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_update:
-                String title = titleText.getText().toString();
-                String desc = descText.getText().toString();
 
-                dbManager.update(_id, title, desc);
+                String title = titleEditText.getText().toString();
+                String type = typeEditText.getText().toString();
+                String time = timeEditText.getText().toString();
+                String address = addressEditText.getText().toString();
+                String desc = descEditText.getText().toString();
+                String status = statusEditText.getText().toString();
+
+                dbManager.update(_id, title, type, time, address, desc, status);
                 this.returnHome();
                 break;
 
