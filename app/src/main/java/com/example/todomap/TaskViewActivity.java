@@ -21,7 +21,7 @@ public class TaskViewActivity extends AppCompatActivity {
 
     private SimpleCursorAdapter adapter;
 
-    final String[] from = new String[] {
+    final String[] from = new String[]{
             DatabaseHelper._ID,
             DatabaseHelper.TITLE,
             DatabaseHelper.TYPE,
@@ -31,7 +31,7 @@ public class TaskViewActivity extends AppCompatActivity {
             DatabaseHelper.STATUS
     };
 
-    final int[] to = new int[] {
+    final int[] to = new int[]{
             R.id.id,
             R.id.title,
             R.id.type,
@@ -50,7 +50,7 @@ public class TaskViewActivity extends AppCompatActivity {
         dbManager.open();
         Cursor cursor = dbManager.fetch();
 
-        listView = (ListView) findViewById(R.id.list_view);
+        listView = (ListView) findViewById(R.id.task_list_view);
         listView.setEmptyView(findViewById(R.id.empty));
 
         adapter = new SimpleCursorAdapter(this, R.layout.task_item, cursor, from, to, 0);
@@ -92,12 +92,14 @@ public class TaskViewActivity extends AppCompatActivity {
         });
     }
 
+    // menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_task_view, menu);
         return true;
     }
 
+    // menu item
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -109,6 +111,12 @@ public class TaskViewActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // map button
+    public void onClickStartMapsActivity(View view) {
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
     }
 
 }

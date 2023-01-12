@@ -32,4 +32,7 @@ This app is the course project of the <Mobile Cartography> course within the fra
     - AddTaskActivity // add task btn from top-right menu, and pop up add task window (should be popup)
     - ModifyActivity // update or delete task window (should be popup)
     - Todo: implement popup window, improve interface
+  - Bottom Navigation Bar
+    - Icon ./app/res/drawable/....
+    - Needs Fragment as UI
 
