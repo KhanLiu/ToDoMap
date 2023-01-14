@@ -28,11 +28,12 @@ This app is the course project of the <Mobile Cartography> course within the fra
     - DBManager // CRUD
     - Task table scheme (Id, title, type, time, address, desc, status), type needs update
   - TaskView
-    - TaskViewActivity // main task view
-    - AddTaskActivity // add task btn from top-right menu, and pop up add task window (should be popup)
-    - ModifyActivity // update or delete task window (should be popup)
-    - Todo: implement popup window, improve interface
+    - TaskFragment // main task view
+    - AddTaskActivity // add task btn from top-right menu, and pop up add task window
+    - ModifyActivity // update or delete task window
+    - Popup window
+    - Todo: improve interface
   - Bottom Navigation Bar
     - Icon ./app/res/drawable/....
-    - Needs Fragment as UI
+    - Task fragment and Map fragment
 

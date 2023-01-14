@@ -60,6 +60,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="add_record" />
+        android:text="Add Task" />
 
 </LinearLayout>
