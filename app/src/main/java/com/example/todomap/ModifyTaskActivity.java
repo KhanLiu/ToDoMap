@@ -7,7 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class ModifyTaskActivity extends Activity implements View.OnClickListener {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+public class ModifyTaskActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     private EditText titleEditText;
@@ -94,7 +98,12 @@ public class ModifyTaskActivity extends Activity implements View.OnClickListener
     }
 
     public void returnHome() {
-        Intent home_intent = new Intent(getApplicationContext(), TaskViewActivity.class)
+
+//        Fragment fragment = new TaskFragment();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction().replace(R.id.frame_layout, fragment).commit();
+
+        Intent home_intent = new Intent(getApplicationContext(), MainActivity.class)
                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(home_intent);
     }

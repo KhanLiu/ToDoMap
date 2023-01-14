@@ -7,7 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class AddTaskActivity extends Activity implements View.OnClickListener {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+public class AddTaskActivity extends AppCompatActivity implements View.OnClickListener {
     private Button addTodoBtn;
     private EditText titleEditText;
     private EditText typeEditText;
@@ -54,7 +58,11 @@ public class AddTaskActivity extends Activity implements View.OnClickListener {
 
                 dbManager.insert(title, type, time, address, desc, status);
 
-                Intent main = new Intent(AddTaskActivity.this, TaskViewActivity.class)
+//                Fragment fragment = new TaskFragment();
+//                FragmentManager fragmentManager = getSupportFragmentManager();
+//                fragmentManager.beginTransaction().replace(R.id.frame_layout, fragment).commit();
+
+                Intent main = new Intent(AddTaskActivity.this, MainActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                 startActivity(main);

@@ -1,64 +1,131 @@
 package com.example.todomap;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TaskFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class TaskFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private DBManager dbManager;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private ListView listView;
 
-    public TaskFragment() {
-        // Required empty public constructor
-    }
+    private SimpleCursorAdapter adapter;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TaskFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TaskFragment newInstance(String param1, String param2) {
-        TaskFragment fragment = new TaskFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    View view;
+
+    final String[] from = new String[]{
+            DatabaseHelper._ID,
+            DatabaseHelper.TITLE,
+            DatabaseHelper.TYPE,
+            DatabaseHelper.TIME,
+            DatabaseHelper.ADDRESS,
+            DatabaseHelper.DESC,
+            DatabaseHelper.STATUS
+    };
+
+    final int[] to = new int[]{
+            R.id.id,
+            R.id.title,
+            R.id.type,
+            R.id.time,
+            R.id.address,
+            R.id.desc,
+            R.id.status,
+    };
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+
+
+        dbManager = new DBManager(getActivity());
+        dbManager.open();
+        Cursor cursor = dbManager.fetch();
+
+        listView = (ListView) view.findViewById(R.id.task_list_view);
+        listView.setEmptyView(view.findViewById(R.id.empty));
+
+        adapter = new SimpleCursorAdapter(getActivity(), R.layout.task_item, cursor, from, to, 0);
+        adapter.notifyDataSetChanged();
+
+        listView.setAdapter(adapter);
+
+        // OnCLickListiner For List Items
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long viewId) {
+                TextView idTextView = (TextView) view.findViewById(R.id.id);
+                TextView titleTextView = (TextView) view.findViewById(R.id.title);
+                TextView typeTextView = (TextView) view.findViewById(R.id.type);
+                TextView timeTextView = (TextView) view.findViewById(R.id.time);
+                TextView addressTextView = (TextView) view.findViewById(R.id.address);
+                TextView descTextView = (TextView) view.findViewById(R.id.desc);
+                TextView statusTextView = (TextView) view.findViewById(R.id.status);
+
+                String id = idTextView.getText().toString();
+                String title = titleTextView.getText().toString();
+                String type = typeTextView.getText().toString();
+                String time = timeTextView.getText().toString();
+                String address = addressTextView.getText().toString();
+                String desc = descTextView.getText().toString();
+                String status = statusTextView.getText().toString();
+
+                Intent modify_intent = new Intent(getActivity().getApplicationContext(), ModifyTaskActivity.class);
+                modify_intent.putExtra("id", id);
+                modify_intent.putExtra("title", title);
+                modify_intent.putExtra("type", type);
+                modify_intent.putExtra("time", time);
+                modify_intent.putExtra("address", address);
+                modify_intent.putExtra("desc", desc);
+                modify_intent.putExtra("status", status);
+
+                startActivity(modify_intent);
+            }
+        });
+
     }
+
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_task_view, menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    // menu item
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.add_record) {
+
+            Intent add_mem = new Intent(getActivity(), AddTaskActivity.class);
+            startActivity(add_mem);
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task, container, false);
+        view = inflater.inflate(R.layout.fragment_task, container, false);
+        return view;
     }
+
+
 }
