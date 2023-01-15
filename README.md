@@ -35,3 +35,7 @@ This app is the course project of the <Mobile Cartography> course within the fra
   - Bottom Navigation Bar
     - Icon ./app/res/drawable/....
     - Task fragment and Map fragment
+- branch dev_latlon
+  - todo: 
+    - address -> latlon (Geocoder)
+    - database type limitation (Id Int, title String, type String, time String, address String, lat Double, lon Double, desc String, status Int)

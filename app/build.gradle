@@ -46,6 +46,4 @@ dependencies {
 
 //    Google Map SDK
     implementation 'com.google.maps.android:android-maps-utils:2.3.0'
-////    Android’s Material Design Library (for navigation bar)
-//    implementation 'com.google.android.material:material:1.2.0'
 }
