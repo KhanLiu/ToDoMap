@@ -38,7 +38,8 @@ public class DBManager {
     public String DESC = "description";
     public String STATUS = "status";
 
-    public void insert(String title, String type, String time, String address, String lat, String lon, String desc, String status) {
+    // Insert a new row into table
+    public void insert(String title, String type, String time, String address, Double lat, Double lon, String desc, Integer status) {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DatabaseHelper.TITLE, title);
         contentValue.put(DatabaseHelper.TYPE, type);
@@ -52,6 +53,7 @@ public class DBManager {
         database.insert(DatabaseHelper.TABLE_NAME, null, contentValue);
     }
 
+    // Fetch all rows from table
     public Cursor fetch() {
         String[] columns = new String[] {
                 DatabaseHelper._ID,
@@ -71,7 +73,8 @@ public class DBManager {
         return cursor;
     }
 
-    public int update(long _id, String title, String type, String time, String address, String lat, String lon, String desc, String status) {
+    // Update a row into table
+    public int update(long _id, String title, String type, String time, String address, Double lat, Double lon, String desc, Integer status) {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DatabaseHelper.TITLE, title);
         contentValue.put(DatabaseHelper.TYPE, type);
@@ -86,6 +89,7 @@ public class DBManager {
         return i;
     }
 
+    // Delete a row from table
     public void delete(long _id) {
         database.delete(DatabaseHelper.TABLE_NAME, DatabaseHelper._ID + "=" + _id, null);
     }

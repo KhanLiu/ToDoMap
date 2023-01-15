@@ -88,10 +88,10 @@ public class TaskFragment extends Fragment {
                 String type = typeTextView.getText().toString();
                 String time = timeTextView.getText().toString();
                 String address = addressTextView.getText().toString();
-                String lat = latTextView.getText().toString();
-                String lon = lonTextView.getText().toString();
+                Double lat = Double.parseDouble(latTextView.getText().toString());
+                Double lon = Double.parseDouble(lonTextView.getText().toString());
                 String desc = descTextView.getText().toString();
-                String status = statusTextView.getText().toString();
+                Integer status = Integer.parseInt(statusTextView.getText().toString());
 
                 Intent modify_intent = new Intent(getActivity().getApplicationContext(), ModifyTaskActivity.class);
                 modify_intent.putExtra("id", id);

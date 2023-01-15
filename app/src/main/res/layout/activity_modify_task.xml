@@ -8,7 +8,7 @@
 
     <EditText
         android:id="@+id/title_edittext"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="enter title plz">
@@ -39,21 +39,28 @@
         android:hint="enter address plz" >
     </EditText>
 
-    <EditText
-        android:id="@+id/lat_edittext"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/search_location_btn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="enter latitude plz" >
-    </EditText>
+        android:layout_gravity="right"
+        android:text="Search" />
 
-    <EditText
-        android:id="@+id/lon_edittext"
+    <TextView
+        android:id="@+id/lat_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="enter longitude plz" >
-    </EditText>
+        android:textSize="25dp"
+        android:hint="latitude" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/lon_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:hint="longitude" >
+    </TextView>
 
     <EditText
         android:id="@+id/desc_edittext"
@@ -64,11 +71,11 @@
     </EditText>
 
     <EditText
-        android:id="@+id/status_edittext"
+        android:id="@+id/status_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="enter status plz"
+        android:text="20dp"
+        android:hint="status"
         android:inputType="textMultiLine" >
     </EditText>
 

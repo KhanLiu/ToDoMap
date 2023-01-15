@@ -1,28 +1,35 @@
 package com.example.todomap;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-public class AddTaskActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button addTodoBtn;
+import java.io.IOException;
+import java.util.List;
+
+public class AddTaskActivity extends AppCompatActivity {
+    private Button searchLocBtn, addTodoBtn;
+
     private EditText titleEditText;
     private EditText typeEditText;
     private EditText timeEditText;
     private EditText addressEditText;
-    private EditText latEditText;
-    private EditText lonEditText;
+    private TextView latText;
+    private TextView lonText;
     private EditText descEditText;
-    private EditText statusEditText;
+    private TextView statusText;
 
     private DBManager dbManager;
+
+    private Geocoder geocoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,44 +43,82 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         typeEditText = (EditText) findViewById(R.id.type_edittext);
         timeEditText = (EditText) findViewById(R.id.time_edittext);
         addressEditText = (EditText) findViewById(R.id.address_edittext);
-        latEditText = (EditText) findViewById(R.id.lat_edittext);
-        lonEditText = (EditText) findViewById(R.id.lon_edittext);
+        latText = (TextView) findViewById(R.id.lat_text);
+        lonText = (TextView) findViewById(R.id.lon_text);
         descEditText = (EditText) findViewById(R.id.desc_edittext);
-        statusEditText = (EditText) findViewById(R.id.status_edittext);
+        statusText = (TextView) findViewById(R.id.status_text);
 
-        addTodoBtn = (Button) findViewById(R.id.add_record);
+        statusText.setText(Integer.toString(0));
 
+        addTodoBtn = (Button) findViewById(R.id.add_task_btn);
+        searchLocBtn = (Button) findViewById(R.id.search_location_btn);
+
+        geocoder = new Geocoder(this);
         dbManager = new DBManager(this);
         dbManager.open();
-        addTodoBtn.setOnClickListener(this);
-    }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.add_record:
+        addTodoBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (latText.getText().toString() != null &
+                        latText.getText().toString() != "Invalid" &
+                        lonText.getText().toString() != null &
+                        lonText.getText().toString() != "Invalid") {
 
-                final String title = titleEditText.getText().toString();
-                final String type = typeEditText.getText().toString();
-                final String time = timeEditText.getText().toString();
-                final String address = addressEditText.getText().toString();
-                final String lat = latEditText.getText().toString();
-                final String lon = lonEditText.getText().toString();
-                final String desc = descEditText.getText().toString();
-                final String status = statusEditText.getText().toString();
+                    final String title = titleEditText.getText().toString();
+                    final String type = typeEditText.getText().toString();
+                    final String time = timeEditText.getText().toString();
+                    final String address = addressEditText.getText().toString();
+                    final Double lat = Double.parseDouble(latText.getText().toString());
+                    final Double lon = Double.parseDouble(lonText.getText().toString());
+                    final String desc = descEditText.getText().toString();
+                    final Integer status = Integer.parseInt(statusText.getText().toString());
 
-                dbManager.insert(title, type, time, address, lat, lon, desc, status);
+                    Log.d("Insert", "Insert: lat: " + lat + ", lon: " + lon + ", status:" + status);
+                    dbManager.insert(title, type, time, address, lat, lon, desc, status);
 
 //                Fragment fragment = new TaskFragment();
 //                FragmentManager fragmentManager = getSupportFragmentManager();
 //                fragmentManager.beginTransaction().replace(R.id.frame_layout, fragment).commit();
 
-                Intent main = new Intent(AddTaskActivity.this, MainActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    Intent main = new Intent(AddTaskActivity.this, MainActivity.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                startActivity(main);
-                break;
-        }
+                    startActivity(main);
+                } else {
+                    Log.d("insert", "Insert failed! No valid address!");
+                }
+
+            }
+        });
+
+        searchLocBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    String address = addressEditText.getText().toString();
+                    List<Address> addresses = geocoder.getFromLocationName(address, 1);
+                    if (addresses.size() > 0) {
+                        Address address1 = addresses.get(0);
+                        Double lat = address1.getLatitude();
+                        Double lon = address1.getLongitude();
+                        latText.setText(Double.toString(lat));
+                        lonText.setText(Double.toString(lon));
+                        Log.d("address", "location1: " + lat + lon);
+                    } else {
+                        Log.d("address", "Invalid address! ");
+                        String invalid = "Invalid";
+                        latText.setText(invalid);
+                        lonText.setText(invalid);
+                    }
+
+                } catch (IOException e) {
+                    Log.d("address", "get location failed!");
+                    String invalid = "Invalid";
+                    latText.setText(invalid);
+                    lonText.setText(invalid);
+                    e.printStackTrace();
+                }
+            }
+        });
     }
-
 }

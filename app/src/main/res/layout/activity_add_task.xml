@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="20dp">
 
     <EditText
@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="enter title plz" >
+        android:hint="enter title plz">
+
         <requestFocus />
     </EditText>
 
@@ -19,60 +20,60 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="enter type plz" >
-    </EditText>
+        android:hint="enter type plz"></EditText>
 
     <EditText
         android:id="@+id/time_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="enter time plz" >
-    </EditText>
+        android:hint="enter time plz"></EditText>
 
     <EditText
         android:id="@+id/address_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="enter address plz" >
-    </EditText>
+        android:hint="enter address plz"></EditText>
 
-    <EditText
-        android:id="@+id/lat_edittext"
+    <Button
+        android:id="@+id/search_location_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="Search" />
+
+    <TextView
+        android:id="@+id/lat_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="enter latitude plz" >
-    </EditText>
+        android:hint="enter latitude plz"
+        android:textSize="20dp"></TextView>
 
-    <EditText
-        android:id="@+id/lon_edittext"
+    <TextView
+        android:id="@+id/lon_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="enter longitude plz" >
-    </EditText>
+        android:textSize="20dp"
+        android:hint="enter longitude plz"></TextView>
 
     <EditText
         android:id="@+id/desc_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="enter description plz" >
-    </EditText>
+        android:hint="enter description plz"></EditText>
 
-    <EditText
-        android:id="@+id/status_edittext"
+    <TextView
+        android:id="@+id/status_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="enter status plz"
-        android:inputType="textMultiLine" >
-    </EditText>
+        android:hint="status"
+        android:inputType="textMultiLine"
+        android:textSize="20dp"></TextView>
 
     <Button
-        android:id="@+id/add_record"
+        android:id="@+id/add_task_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

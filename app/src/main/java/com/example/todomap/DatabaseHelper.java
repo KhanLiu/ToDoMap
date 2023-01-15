@@ -50,8 +50,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + STATUS + " INTEGER "
                     + " ); ";
 
-    public DatabaseHelper(Context context) {
 
+    public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 

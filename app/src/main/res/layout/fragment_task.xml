@@ -17,8 +17,8 @@
         android:id="@+id/empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="empty_list_text" />
+        android:layout_gravity="center"
+        android:text="Add a task" />
 
 
 </FrameLayout>
