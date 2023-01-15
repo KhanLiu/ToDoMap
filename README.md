@@ -17,7 +17,6 @@ This app is the course project of the <Mobile Cartography> course within the fra
 - [ ] integration of images
 - [ ] multi-language
 
-
 #### Google Map API
 
 #### Development Log
@@ -36,4 +35,3 @@ This app is the course project of the <Mobile Cartography> course within the fra
   - Bottom Navigation Bar
     - Icon ./app/res/drawable/....
     - Task fragment and Map fragment
-
