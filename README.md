@@ -17,3 +17,21 @@ This app is the course project of the <Mobile Cartography> course within the fra
 - [ ] integration of images
 - [ ] multi-language
 
+#### Google Map API
+
+#### Development Log
+
+- branch dev_sql
+  - SQLite 
+    - DatabaseHelper // Create, Update table (only one table now)
+    - DBManager // CRUD
+    - Task table scheme (Id, title, type, time, address, lat, lon, desc, status), type needs update
+  - TaskView
+    - TaskFragment // main task view
+    - AddTaskActivity // add task btn from top-right menu, and pop up add task window
+    - ModifyActivity // update or delete task window
+    - Popup window
+    - Todo: improve interface
+  - Bottom Navigation Bar
+    - Icon ./app/res/drawable/....
+    - Task fragment and Map fragment
