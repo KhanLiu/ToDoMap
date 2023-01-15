@@ -26,7 +26,7 @@ This app is the course project of the <Mobile Cartography> course within the fra
   - SQLite 
     - DatabaseHelper // Create, Update table (only one table now)
     - DBManager // CRUD
-    - Task table scheme (Id, title, type, time, address, desc, status), type needs update
+    - Task table scheme (Id, title, type, time, address, lat, lon, desc, status), type needs update
   - TaskView
     - TaskFragment // main task view
     - AddTaskActivity // add task btn from top-right menu, and pop up add task window
