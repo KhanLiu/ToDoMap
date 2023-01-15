@@ -17,6 +17,8 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
     private EditText typeEditText;
     private EditText timeEditText;
     private EditText addressEditText;
+    private EditText latEditText;
+    private EditText lonEditText;
     private EditText descEditText;
     private EditText statusEditText;
 
@@ -34,6 +36,8 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         typeEditText = (EditText) findViewById(R.id.type_edittext);
         timeEditText = (EditText) findViewById(R.id.time_edittext);
         addressEditText = (EditText) findViewById(R.id.address_edittext);
+        latEditText = (EditText) findViewById(R.id.lat_edittext);
+        lonEditText = (EditText) findViewById(R.id.lon_edittext);
         descEditText = (EditText) findViewById(R.id.desc_edittext);
         statusEditText = (EditText) findViewById(R.id.status_edittext);
 
@@ -53,10 +57,12 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
                 final String type = typeEditText.getText().toString();
                 final String time = timeEditText.getText().toString();
                 final String address = addressEditText.getText().toString();
+                final String lat = latEditText.getText().toString();
+                final String lon = lonEditText.getText().toString();
                 final String desc = descEditText.getText().toString();
                 final String status = statusEditText.getText().toString();
 
-                dbManager.insert(title, type, time, address, desc, status);
+                dbManager.insert(title, type, time, address, lat, lon, desc, status);
 
 //                Fragment fragment = new TaskFragment();
 //                FragmentManager fragmentManager = getSupportFragmentManager();

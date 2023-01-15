@@ -40,6 +40,22 @@
     </EditText>
 
     <EditText
+        android:id="@+id/lat_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="enter latitude plz" >
+    </EditText>
+
+    <EditText
+        android:id="@+id/lon_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="enter longitude plz" >
+    </EditText>
+
+    <EditText
         android:id="@+id/desc_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

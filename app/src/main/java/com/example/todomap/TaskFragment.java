@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,8 @@ public class TaskFragment extends Fragment {
 
     private DBManager dbManager;
 
+    private Cursor cursor;
+
     private ListView listView;
 
     private SimpleCursorAdapter adapter;
@@ -33,6 +36,8 @@ public class TaskFragment extends Fragment {
             DatabaseHelper.TYPE,
             DatabaseHelper.TIME,
             DatabaseHelper.ADDRESS,
+            DatabaseHelper.LAT,
+            DatabaseHelper.LON,
             DatabaseHelper.DESC,
             DatabaseHelper.STATUS
     };
@@ -43,13 +48,14 @@ public class TaskFragment extends Fragment {
             R.id.type,
             R.id.time,
             R.id.address,
+            R.id.lat,
+            R.id.lon,
             R.id.desc,
             R.id.status,
     };
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
 
         dbManager = new DBManager(getActivity());
         dbManager.open();
@@ -72,6 +78,8 @@ public class TaskFragment extends Fragment {
                 TextView typeTextView = (TextView) view.findViewById(R.id.type);
                 TextView timeTextView = (TextView) view.findViewById(R.id.time);
                 TextView addressTextView = (TextView) view.findViewById(R.id.address);
+                TextView latTextView = (TextView) view.findViewById(R.id.lat);
+                TextView lonTextView = (TextView) view.findViewById(R.id.lon);
                 TextView descTextView = (TextView) view.findViewById(R.id.desc);
                 TextView statusTextView = (TextView) view.findViewById(R.id.status);
 
@@ -80,6 +88,8 @@ public class TaskFragment extends Fragment {
                 String type = typeTextView.getText().toString();
                 String time = timeTextView.getText().toString();
                 String address = addressTextView.getText().toString();
+                String lat = latTextView.getText().toString();
+                String lon = lonTextView.getText().toString();
                 String desc = descTextView.getText().toString();
                 String status = statusTextView.getText().toString();
 
@@ -89,6 +99,8 @@ public class TaskFragment extends Fragment {
                 modify_intent.putExtra("type", type);
                 modify_intent.putExtra("time", time);
                 modify_intent.putExtra("address", address);
+                modify_intent.putExtra("latitude", lat);
+                modify_intent.putExtra("longitude", lon);
                 modify_intent.putExtra("desc", desc);
                 modify_intent.putExtra("status", status);
 
@@ -124,6 +136,7 @@ public class TaskFragment extends Fragment {
         setHasOptionsMenu(true);
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_task, container, false);
+
         return view;
     }
 

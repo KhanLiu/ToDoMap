@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.todomap.databinding.ActivityMainBinding;
 
@@ -18,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
         replaceFragment(new TaskFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {

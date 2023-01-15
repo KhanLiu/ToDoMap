@@ -33,15 +33,19 @@ public class DBManager {
     public String TYPE = "type";
     public String TIME = "time";
     public String ADDRESS = "address";
+    public String LAT = "latitude";
+    public String LON = "longitude";
     public String DESC = "description";
     public String STATUS = "status";
 
-    public void insert(String title, String type, String time, String address, String desc, String status) {
+    public void insert(String title, String type, String time, String address, String lat, String lon, String desc, String status) {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DatabaseHelper.TITLE, title);
         contentValue.put(DatabaseHelper.TYPE, type);
         contentValue.put(DatabaseHelper.TIME, time);
         contentValue.put(DatabaseHelper.ADDRESS, address);
+        contentValue.put(DatabaseHelper.LAT, lat);
+        contentValue.put(DatabaseHelper.LON, lon);
         contentValue.put(DatabaseHelper.DESC, desc);
         contentValue.put(DatabaseHelper.STATUS, status);
 
@@ -55,6 +59,8 @@ public class DBManager {
                 DatabaseHelper.TYPE,
                 DatabaseHelper.TIME,
                 DatabaseHelper.ADDRESS,
+                DatabaseHelper.LAT,
+                DatabaseHelper.LON,
                 DatabaseHelper.DESC,
                 DatabaseHelper.STATUS
         };
@@ -65,12 +71,14 @@ public class DBManager {
         return cursor;
     }
 
-    public int update(long _id, String title, String type, String time, String address, String desc, String status) {
+    public int update(long _id, String title, String type, String time, String address, String lat, String lon, String desc, String status) {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DatabaseHelper.TITLE, title);
         contentValue.put(DatabaseHelper.TYPE, type);
         contentValue.put(DatabaseHelper.TIME, time);
         contentValue.put(DatabaseHelper.ADDRESS, address);
+        contentValue.put(DatabaseHelper.LAT, lat);
+        contentValue.put(DatabaseHelper.LON, lon);
         contentValue.put(DatabaseHelper.DESC, desc);
         contentValue.put(DatabaseHelper.STATUS, status);
 

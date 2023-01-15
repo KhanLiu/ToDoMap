@@ -6,6 +6,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,7 +25,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TYPE = "type";
     public static final String TIME = "time";
     public static final String ADDRESS = "address";
-
+    public static final String LAT = "latitude";
+    public static final String LON = "longitude";
     public static final String DESC = "description";
     public static final String STATUS = "status";
 
@@ -42,16 +44,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + TYPE + " TEXT, "
                     + TIME + " TEXT, "
                     + ADDRESS + " TEXT, "
+                    + LAT + " DOUBLE, "
+                    + LON + " DOUBLE, "
                     + DESC + " TEXT, "
                     + STATUS + " INTEGER "
                     + " ); ";
 
     public DatabaseHelper(Context context) {
+
         super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("CREATE_TABLE", "CREATE_TABLE: " + CREATE_TABLE.toString());
         db.execSQL(CREATE_TABLE);
     }
 

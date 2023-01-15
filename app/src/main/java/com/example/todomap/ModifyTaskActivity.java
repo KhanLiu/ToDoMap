@@ -18,6 +18,8 @@ public class ModifyTaskActivity extends AppCompatActivity implements View.OnClic
     private EditText typeEditText;
     private EditText timeEditText;
     private EditText addressEditText;
+    private EditText latEditText;
+    private EditText lonEditText;
     private EditText descEditText;
     private EditText statusEditText;
 
@@ -43,6 +45,8 @@ public class ModifyTaskActivity extends AppCompatActivity implements View.OnClic
         typeEditText = (EditText) findViewById(R.id.type_edittext);
         timeEditText = (EditText) findViewById(R.id.time_edittext);
         addressEditText = (EditText) findViewById(R.id.address_edittext);
+        latEditText = (EditText) findViewById(R.id.lat_edittext);
+        lonEditText = (EditText) findViewById(R.id.lon_edittext);
         descEditText = (EditText) findViewById(R.id.desc_edittext);
         statusEditText = (EditText) findViewById(R.id.status_edittext);
 
@@ -56,6 +60,8 @@ public class ModifyTaskActivity extends AppCompatActivity implements View.OnClic
         String type = intent.getStringExtra("type");
         String time = intent.getStringExtra("time");
         String address = intent.getStringExtra("address");
+        String lat = intent.getStringExtra("latitude");
+        String lon = intent.getStringExtra("longitude");
         String desc = intent.getStringExtra("desc");
         String status = intent.getStringExtra("status");
 
@@ -66,6 +72,8 @@ public class ModifyTaskActivity extends AppCompatActivity implements View.OnClic
         typeEditText.setText(type);
         timeEditText.setText(time);
         addressEditText.setText(address);
+        latEditText.setText(lat);
+        lonEditText.setText(lon);
         descEditText.setText(desc);
         statusEditText.setText(status);
 
@@ -83,10 +91,12 @@ public class ModifyTaskActivity extends AppCompatActivity implements View.OnClic
                 String type = typeEditText.getText().toString();
                 String time = timeEditText.getText().toString();
                 String address = addressEditText.getText().toString();
+                String lat = latEditText.getText().toString();
+                String lon = lonEditText.getText().toString();
                 String desc = descEditText.getText().toString();
                 String status = statusEditText.getText().toString();
 
-                dbManager.update(_id, title, type, time, address, desc, status);
+                dbManager.update(_id, title, type, time, address, lat, lon, desc, status);
                 this.returnHome();
                 break;
 
