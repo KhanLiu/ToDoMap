@@ -3,22 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_200"
-    tools:context=".TaskFragment">
+    tools:context=".TasksFragment">
 
-    <ListView
-        android:id="@+id/task_list_view"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tasks_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:dividerHeight="1dp"
-        android:padding="10dp"></ListView>
-
-    <TextView
-        android:id="@+id/empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Add a task" />
+        android:layout_height="match_parent"
+        tools:listitem="@layout/task_item2"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add"
@@ -27,6 +18,4 @@
         android:layout_gravity="end|bottom"
         android:src="@drawable/ic_round_add_24"
         android:layout_margin="16dp" />
-
-
 </FrameLayout>

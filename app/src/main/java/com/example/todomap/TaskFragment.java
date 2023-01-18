@@ -18,6 +18,9 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
 public class TaskFragment extends Fragment {
 
     private DBManager dbManager;
@@ -108,32 +111,45 @@ public class TaskFragment extends Fragment {
             }
         });
 
+        FloatingActionButton fab = view.findViewById(R.id.fab_add);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+
+                Intent add_mem = new Intent(getActivity(), AddTaskActivity.class);
+                startActivity(add_mem);
+            }
+        });
+
     }
 
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_task_view, menu);
-//        super.onCreateOptionsMenu(menu, inflater);
-    }
 
-    // menu item
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
-        if (id == R.id.add_record) {
-
-            Intent add_mem = new Intent(getActivity(), AddTaskActivity.class);
-            startActivity(add_mem);
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.menu_task_view, menu);
+////        super.onCreateOptionsMenu(menu, inflater);
+//    }
+//
+//    // menu item
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        int id = item.getItemId();
+//        if (id == R.id.add_record) {
+//
+//            Intent add_mem = new Intent(getActivity(), AddTaskActivity.class);
+//            startActivity(add_mem);
+//
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_task, container, false);
 

@@ -22,14 +22,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        replaceFragment(new TaskFragment());
+        replaceFragment(new TasksFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()){
 
                 case R.id.task:
-                    replaceFragment(new TaskFragment());
+                    replaceFragment(new TasksFragment());
                     break;
                 case R.id.map:
                     replaceFragment(new MapFragment());

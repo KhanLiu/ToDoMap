@@ -2,8 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/id"
@@ -68,9 +67,9 @@
         android:layout_below="@id/type"
         android:layout_toRightOf="@id/time_title"
         android:ellipsize="end"
+        android:inputType="datetime"
         android:maxLines="2"
-        android:padding="3dp"
-        android:visibility="visible" />
+        android:padding="3dp" />
 
     <TextView
         android:id="@+id/address_title"
@@ -186,6 +185,7 @@
         android:maxLines="2"
         android:padding="3dp"
         android:visibility="visible" />
+
 
 
 </RelativeLayout>
