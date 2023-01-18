@@ -7,14 +7,18 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -42,10 +46,20 @@ public class TasksFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.tasks_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
-        MyRecyclerviewAdapter myRecyclerviewAdapter = new MyRecyclerviewAdapter(getContext(), taskArrayList);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), LinearLayout.VERTICAL));
+        MyRecyclerviewAdapter myRecyclerviewAdapter = new MyRecyclerviewAdapter(getContext(), taskArrayList, new OnItemClickListener() {
+            @Override
+            public void onClick(Task task) {
+
+                Snackbar.make(view, "Item Clicked" + task.get_id(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+//                Toast.makeText(getContext(), "Item Clicked" + task.get_id(), Toast.LENGTH_LONG).show();
+            }
+        });
         recyclerView.setAdapter(myRecyclerviewAdapter);
         myRecyclerviewAdapter.notifyDataSetChanged();
 
+
+        // Folating buttion "add task"
         FloatingActionButton fab = view.findViewById(R.id.fab_add);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +84,7 @@ public class TasksFragment extends Fragment {
         cursor = dbManager.fetch();
         int length = cursor.getCount();
 
+        int _idIndex = cursor.getColumnIndex(DatabaseHelper._ID);
         int titleIndex = cursor.getColumnIndex(DatabaseHelper.TITLE);
         int typeIndex = cursor.getColumnIndex(DatabaseHelper.TYPE);
         int descIndex = cursor.getColumnIndex(DatabaseHelper.DESC);
@@ -81,6 +96,7 @@ public class TasksFragment extends Fragment {
 
         for (int i = 0; i < length; i++) {
             task = new Task(
+                    Integer.parseInt(cursor.getString(_idIndex)),
                     cursor.getString(titleIndex),
                     cursor.getString(typeIndex),
                     cursor.getString(descIndex),

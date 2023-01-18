@@ -13,12 +13,14 @@ import java.util.ArrayList;
 
 public class MyRecyclerviewAdapter extends RecyclerView.Adapter<MyRecyclerviewAdapter.MyViewHolder> {
 
-    Context context;
-    ArrayList<Task> taskArrayList;
+    private Context context;
+    private ArrayList<Task> taskArrayList;
+    private OnItemClickListener listener;
 
-    public MyRecyclerviewAdapter(Context context, ArrayList<Task> taskArrayList) {
+    public MyRecyclerviewAdapter(Context context, ArrayList<Task> taskArrayList, OnItemClickListener listener) {
         this.context = context;
         this.taskArrayList = taskArrayList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -38,6 +40,8 @@ public class MyRecyclerviewAdapter extends RecyclerView.Adapter<MyRecyclerviewAd
         holder.descText.setText(task.description);
         holder.timeText.setText(task.time);
         holder.addressText.setText(task.address);
+
+        holder.bind(task, listener);
     }
 
     @Override
@@ -61,6 +65,17 @@ public class MyRecyclerviewAdapter extends RecyclerView.Adapter<MyRecyclerviewAd
             timeText = itemView.findViewById(R.id.time_textview);
             addressText = itemView.findViewById(R.id.address_textview);
 
+
+        }
+        public void bind(Task task, OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    listener.onClick(task);
+                }
+            });
         }
     }
+
 }
+
