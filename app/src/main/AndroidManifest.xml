@@ -24,16 +24,16 @@
                 android:value="" />
 
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 
         <activity
             android:name=".ModifyTaskActivity"
-            android:theme="@style/Theme.AppCompat.Dialog.Alert"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Dialog.Alert">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -41,8 +41,8 @@
 
         <activity
             android:name=".AddTaskActivity"
-            android:theme="@style/Theme.AppCompat.Dialog.Alert"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Dialog.Alert">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -64,4 +64,6 @@
             android:value="${MAPS_API_KEY}" />\
     </application>
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 </manifest>

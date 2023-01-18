@@ -57,6 +57,20 @@ public class AddTaskActivity extends AppCompatActivity {
         dbManager = new DBManager(this);
         dbManager.open();
 
+        Intent add_task_by_search = getIntent();
+        String new_task_lat = add_task_by_search.getStringExtra("new_task_lat");
+        String new_task_lon = add_task_by_search.getStringExtra("new_task_lon");
+        String new_task_add = add_task_by_search.getStringExtra("new_task_add");
+        latText.setText(new_task_lat);
+        lonText.setText(new_task_lon);
+        addressEditText.setText(new_task_add);
+
+//        Intent add_task_on_map = getIntent();
+//        String new_task_lat_1 = add_task_on_map.getStringExtra("new_task_lat_1");
+//        String new_task_lon_1 = add_task_on_map.getStringExtra("new_task_lon_1");
+//        latText.setText(new_task_lat_1);
+//        lonText.setText(new_task_lon_1);
+
         addTodoBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (latText.getText().toString() != null &
