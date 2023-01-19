@@ -22,12 +22,11 @@
         android:ems="10"
         android:hint="enter type plz"></EditText>
 
-    <EditText
-        android:id="@+id/time_edittext"
+    <Spinner
+        android:id="@+id/task_type_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="enter time plz"></EditText>
+        ></Spinner>
 
     <Button
         android:id="@+id/date_picker_btn"

@@ -16,9 +16,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -28,12 +31,16 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class AddTaskActivity extends AppCompatActivity {
+public class AddTaskActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Button searchLocBtn, addTodoBtn;
 
 
@@ -43,9 +50,13 @@ public class AddTaskActivity extends AppCompatActivity {
     private int year, month, day, hour, minute;
 
     // Location
-    private LocationManager locationManager;
+    private Location myLocation;
     private Double lat, lon;
     private Geocoder geocoder;
+
+    // type
+    private Spinner taskTypeSpinner;
+//    private TextView type
 
     private EditText titleEditText;
     private EditText typeEditText;
@@ -57,8 +68,6 @@ public class AddTaskActivity extends AppCompatActivity {
 
     private DBManager dbManager;
 
-    @SuppressLint("MissingPermission")
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +85,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
         addTodoBtn = (Button) findViewById(R.id.add_task_btn);
         searchLocBtn = (Button) findViewById(R.id.search_location_btn);
+//        currentLocBtn = findViewById(R.id.current_location_btn);
 
         statusText.setText(Integer.toString(0));
 
@@ -89,43 +99,17 @@ public class AddTaskActivity extends AppCompatActivity {
         timeString = getNowTime();
         timeButton.setText(timeString);
 
-        // Location
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        // Type Spinner
+        taskTypeSpinner = findViewById(R.id.task_type_spinner);
+        taskTypeSpinner.setOnItemSelectedListener(this);
 
-        ActivityResultLauncher<String[]> locationPermissionRequest = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-            Boolean fineLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false);
-            Boolean coarseLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false);
-            if (fineLocationGranted || coarseLocationGranted) {
-                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                Log.d("location1", "onLocationChanged: " + location.toString());
-
-                lat = location.getLatitude();
-                lon = location.getLongitude();
-
-                latText.setText(lat+"");
-                lonText.setText(lon+"");
-
-                Geocoder geocoder = new Geocoder(AddTaskActivity.this, Locale.getDefault());
-
-                try {
-                    List<Address> address_list = geocoder.getFromLocation(lat, lon, 1);
-                    if (address_list.size() != 0) {
-                        String address_string = address_list.get(0).getAddressLine(0);
-                        addressEditText.setText(address_string);
-                    } else {
-                        addressEditText.setText("no address found");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                Toast.makeText(this, "Location cannot be obtained due to missing permission.", Toast.LENGTH_LONG).show();
-            }
-        });
-        String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-        locationPermissionRequest.launch(PERMISSIONS);
+        String[] taskTypes = getResources().getStringArray(R.array.todo_types);
+        ArrayAdapter typeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, taskTypes);
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        taskTypeSpinner.setAdapter(typeAdapter);
 
 
+        // Geocoder
         geocoder = new Geocoder(this);
         dbManager = new DBManager(this);
         dbManager.open();
@@ -255,7 +239,7 @@ public class AddTaskActivity extends AppCompatActivity {
             }
         };
         Calendar cal = Calendar.getInstance();
-        hour = cal.get(Calendar.HOUR_OF_DAY);
+        hour = cal.get(Calendar.HOUR_OF_DAY) + 1;
         minute = cal.get(Calendar.MINUTE);
 
         int style = AlertDialog.THEME_HOLO_LIGHT;
@@ -278,9 +262,40 @@ public class AddTaskActivity extends AppCompatActivity {
     // Now time
     private String getNowTime() {
         Calendar cal = Calendar.getInstance();
-        hour = cal.get(Calendar.HOUR_OF_DAY);
+        hour = cal.get(Calendar.HOUR_OF_DAY)+1;
         minute = cal.get(Calendar.MINUTE);
-        month = month + 1;
         return String.format(Locale.getDefault(), "%02d:%02d", hour, minute);
+    }
+
+
+    // Type spinner
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+        if (adapterView.getId()==R.id.task_type_spinner){
+            String valueFromSpinner = adapterView.getItemAtPosition(position).toString();
+            typeEditText.setText(new String(returnEmoji(valueFromSpinner)));
+        }
+    }
+
+    private char[] returnEmoji(String task_class) {
+        Log.d("returnEmoji", "returnEmoji: "+task_class);
+        if (task_class.equals("All"))
+            return Character.toChars(0x1F4CB);
+        if (task_class.equals("Work"))
+            return Character.toChars(0x1F4BC);
+        if (task_class.equals("Study"))
+            return Character.toChars(0x1F4D6);
+        if (task_class.equals("Life"))
+            return Character.toChars(0x1F388);
+        if (task_class.equals("Other"))
+            return Character.toChars(0x1F30D);
+        if (task_class.equals("Done"))
+            return Character.toChars(0x2714);
+        return Character.toChars(0x1F4CB);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
