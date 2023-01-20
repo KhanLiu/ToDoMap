@@ -53,6 +53,24 @@ public class TasksFragment extends Fragment {
 
                 Snackbar.make(view, "Item Clicked" + task.get_id(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
 //                Toast.makeText(getContext(), "Item Clicked" + task.get_id(), Toast.LENGTH_LONG).show();
+
+                Integer id = task.get_id();
+                String title = task.getTitle();
+                String type = task.getType();
+                String time = task.getTime();
+                String address = task.getAddress();
+                String desc = task.getDescription();
+
+                Intent modify_intent = new Intent(getActivity().getApplicationContext(), ModifyTaskActivity.class);
+
+                modify_intent.putExtra("id", id);
+                modify_intent.putExtra("title", title);
+                modify_intent.putExtra("type", type);
+                modify_intent.putExtra("time", time);
+                modify_intent.putExtra("address", address);
+                modify_intent.putExtra("desc", desc);
+
+                startActivity(modify_intent);
             }
         });
         recyclerView.setAdapter(myRecyclerviewAdapter);
@@ -67,8 +85,8 @@ public class TasksFragment extends Fragment {
 //                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 
-                Intent add_mem = new Intent(getActivity(), AddTaskActivity.class);
-                startActivity(add_mem);
+                Intent add_intent = new Intent(getActivity(), AddTaskActivity.class);
+                startActivity(add_intent);
             }
         });
 
@@ -92,7 +110,7 @@ public class TasksFragment extends Fragment {
         int addressIndex = cursor.getColumnIndex(DatabaseHelper.ADDRESS);
         int latIndex = cursor.getColumnIndex(DatabaseHelper.LAT);
         int lonIndex = cursor.getColumnIndex(DatabaseHelper.LON);
-        int statusIndex = cursor.getColumnIndex(DatabaseHelper.STATUS);
+//        int statusIndex = cursor.getColumnIndex(DatabaseHelper.STATUS);
 
         for (int i = 0; i < length; i++) {
             task = new Task(
@@ -102,9 +120,9 @@ public class TasksFragment extends Fragment {
                     cursor.getString(descIndex),
                     cursor.getString(timeIndex),
                     cursor.getString(addressIndex),
-                    Double.parseDouble(cursor.getString(latIndex)),
-                    Double.parseDouble(cursor.getString(lonIndex)),
-                    Integer.parseInt(cursor.getString(statusIndex))
+                    cursor.getDouble(latIndex),
+                    cursor.getDouble(lonIndex)
+//                    cursor.getInt(statusIndex)
             );
 
             taskArrayList.add(task);

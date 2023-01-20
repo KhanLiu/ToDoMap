@@ -28,7 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LAT = "latitude";
     public static final String LON = "longitude";
     public static final String DESC = "description";
-    public static final String STATUS = "status";
+//    public static final String STATUS = "status";
 
     // Database Information
     static final String DB_NAME = "TASKS_TABLE.DB";
@@ -46,8 +46,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + ADDRESS + " TEXT, "
                     + LAT + " DOUBLE, "
                     + LON + " DOUBLE, "
-                    + DESC + " TEXT, "
-                    + STATUS + " INTEGER "
+                    + DESC + " TEXT "
+//                    + STATUS + " INTEGER "
                     + " ); ";
 
 

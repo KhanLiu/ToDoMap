@@ -3,81 +3,74 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:padding="20dp">
 
 
-    <EditText
-        android:id="@+id/title_edittext"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="enter title plz">
-        <requestFocus />
-    </EditText>
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/type_edittext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="enter type plz" >
-    </EditText>
+        <Spinner
+            android:id="@+id/task_type_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"></Spinner>
 
-    <EditText
-        android:id="@+id/time_edittext"
-        android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/title_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter a todo"
+            android:textSize="18dp">
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/date_time_layout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="enter time plz" >
-    </EditText>
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/date_picker_btn"
+            style="?android:spinnerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="openDatePicker"
+            android:text="Select Date"
+            android:textSize="18sp"></Button>
+
+        <Button
+            android:id="@+id/time_picker_btn"
+            style="?android:spinnerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="openTimePicker"
+            android:text="Select Time"
+            android:textSize="18dp"></Button>
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/address_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="enter address plz" >
-    </EditText>
+        android:textSize="18dp"
+        android:hint="Enter an address"></EditText>
 
-    <Button
-        android:id="@+id/search_location_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="Search" />
-
-    <TextView
-        android:id="@+id/lat_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:hint="latitude" >
-    </TextView>
-
-    <TextView
-        android:id="@+id/lon_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:hint="longitude" >
-    </TextView>
 
     <EditText
         android:id="@+id/desc_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="enter description plz" >
-    </EditText>
+        android:textSize="18dp"
+        android:hint="Description"></EditText>
 
-    <EditText
-        android:id="@+id/status_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="20dp"
-        android:hint="status"
-        android:inputType="textMultiLine" >
-    </EditText>
 
 
     <LinearLayout

@@ -10,10 +10,10 @@ public class Task {
     String address;
     Double latitude;
     Double longitude;
-    Integer status;
+//    Integer status;
 
     public Task(Integer _id, String title, String type, String description, String time,
-                String address, Double latitude, Double longitude, Integer status) {
+                String address, Double latitude, Double longitude) {
 
         this._id = _id;
         this.title = title;
@@ -23,8 +23,32 @@ public class Task {
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.status = status;
+//        this.status = status;
 
+    }
+
+    public Integer get_id() {
+        return _id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public Double getLatitude() {
@@ -35,11 +59,8 @@ public class Task {
         return longitude;
     }
 
-    public Integer get_id() {
-        return _id;
-    }
 
-    public Integer getStatus() {
-        return status;
-    }
+//    public Integer getStatus() {
+//        return status;
+//    }
 }

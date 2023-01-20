@@ -31,9 +31,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -41,8 +40,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class AddTaskActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private Button searchLocBtn, addTodoBtn;
-
+    private Button addTodoBtn;
 
     // Date and Time
     private Button dateButton, timeButton;
@@ -50,22 +48,21 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     private int year, month, day, hour, minute;
 
     // Location
-    private Location myLocation;
+    private EditText addressEditText;
     private Double lat, lon;
     private Geocoder geocoder;
 
     // type
     private Spinner taskTypeSpinner;
-//    private TextView type
+    private String typeString;
 
+    // Title
     private EditText titleEditText;
-    private EditText typeEditText;
-    private EditText addressEditText;
-    private TextView latText;
-    private TextView lonText;
-    private EditText descEditText;
-    private TextView statusText;
 
+    // Description
+    private EditText descEditText;
+
+    // sqlite datebase
     private DBManager dbManager;
 
     @Override
@@ -75,19 +72,12 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         setTitle("Add Record");
         setContentView(R.layout.activity_add_task);
 
-        titleEditText = (EditText) findViewById(R.id.title_edittext);
-        typeEditText = (EditText) findViewById(R.id.type_edittext);
+        // Address
         addressEditText = (EditText) findViewById(R.id.address_edittext);
-        latText = (TextView) findViewById(R.id.lat_text);
-        lonText = (TextView) findViewById(R.id.lon_text);
+
+        //Title and Description
+        titleEditText = (EditText) findViewById(R.id.title_edittext);
         descEditText = (EditText) findViewById(R.id.desc_edittext);
-        statusText = (TextView) findViewById(R.id.status_text);
-
-        addTodoBtn = (Button) findViewById(R.id.add_task_btn);
-        searchLocBtn = (Button) findViewById(R.id.search_location_btn);
-//        currentLocBtn = findViewById(R.id.current_location_btn);
-
-        statusText.setText(Integer.toString(0));
 
         // Date picker
         dateButton = findViewById(R.id.date_picker_btn);
@@ -108,74 +98,64 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         taskTypeSpinner.setAdapter(typeAdapter);
 
+        // Add task button
+        addTodoBtn = (Button) findViewById(R.id.add_task_btn);
 
         // Geocoder
         geocoder = new Geocoder(this);
         dbManager = new DBManager(this);
         dbManager.open();
 
+        // Add task button onClick
         addTodoBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (latText.getText().toString() != null &
-                        latText.getText().toString() != "Invalid" &
-                        lonText.getText().toString() != null &
-                        lonText.getText().toString() != "Invalid") {
+                final String title = titleEditText.getText().toString();
+                final String desc = descEditText.getText().toString();
+                final String address = addressEditText.getText().toString();
 
-                    final String title = titleEditText.getText().toString();
-                    final String type = typeEditText.getText().toString();
-                    final String time = dateString + " " + timeString;
-                    final String address = addressEditText.getText().toString();
-                    final Double lat = Double.parseDouble(latText.getText().toString());
-                    final Double lon = Double.parseDouble(lonText.getText().toString());
-                    final String desc = descEditText.getText().toString();
-                    final Integer status = Integer.parseInt(statusText.getText().toString());
+                final String type = typeString;
+                final String time = dateString + " " + timeString;
 
-                    dbManager.insert(title, type, time, address, lat, lon, desc, status);
-
-//                Fragment fragment = new TaskFragment();
-//                FragmentManager fragmentManager = getSupportFragmentManager();
-//                fragmentManager.beginTransaction().replace(R.id.frame_layout, fragment).commit();
-
-                    Intent main = new Intent(AddTaskActivity.this, MainActivity.class)
-                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                    startActivity(main);
+                if (title.equals("")) {
+                    Snackbar.make(v, "Title is required!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                } else if (address.equals("")) {
+                    Snackbar.make(v, "Address is required!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 } else {
-                    Log.d("insert", "Insert failed! No valid address!");
-                }
+                    //Geocoding
+                    try {
+                        List<Address> addresses = geocoder.getFromLocationName(address, 1);
+                        if (addresses.size() > 0) {
+                            Address address1 = addresses.get(0);
+                            lat = address1.getLatitude();
+                            lon = address1.getLongitude();
+//                            latText.setText(Double.toString(lat));
+//                            lonText.setText(Double.toString(lon));
+                            Log.d("address", "location1: " + lat + lon);
 
-            }
-        });
+                            // insert a new task
+                            dbManager.insert(title, type, time, address, lat, lon, desc);
+                            Intent main = new Intent(AddTaskActivity.this, MainActivity.class)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(main);
 
-        searchLocBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    String address = addressEditText.getText().toString();
-                    List<Address> addresses = geocoder.getFromLocationName(address, 1);
-                    if (addresses.size() > 0) {
-                        Address address1 = addresses.get(0);
-                        Double lat = address1.getLatitude();
-                        Double lon = address1.getLongitude();
-                        latText.setText(Double.toString(lat));
-                        lonText.setText(Double.toString(lon));
-                        Log.d("address", "location1: " + lat + lon);
-                    } else {
-                        Log.d("address", "Invalid address! ");
-                        String invalid = "Invalid";
-                        latText.setText(invalid);
-                        lonText.setText(invalid);
+                        } else {
+                            Snackbar.make(v, "Invalid address!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                            Log.d("address", "Invalid address! ");
+//                            latText.setText("0");
+//                            lonText.setText("0");
+                        }
+                    } catch (IOException e) {
+                        Snackbar.make(v, "Invalid geocoder!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                        Log.d("address", "get location failed!");
+//                        latText.setText("0");
+//                        lonText.setText("0");
+                        e.printStackTrace();
                     }
 
-                } catch (IOException e) {
-                    Log.d("address", "get location failed!");
-                    String invalid = "Invalid";
-                    latText.setText(invalid);
-                    lonText.setText(invalid);
-                    e.printStackTrace();
                 }
             }
         });
+//
     }
 
     // Date
@@ -262,7 +242,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     // Now time
     private String getNowTime() {
         Calendar cal = Calendar.getInstance();
-        hour = cal.get(Calendar.HOUR_OF_DAY)+1;
+        hour = cal.get(Calendar.HOUR_OF_DAY) + 1;
         minute = cal.get(Calendar.MINUTE);
         return String.format(Locale.getDefault(), "%02d:%02d", hour, minute);
     }
@@ -271,14 +251,19 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     // Type spinner
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-        if (adapterView.getId()==R.id.task_type_spinner){
+        if (adapterView.getId() == R.id.task_type_spinner) {
             String valueFromSpinner = adapterView.getItemAtPosition(position).toString();
-            typeEditText.setText(new String(returnEmoji(valueFromSpinner)));
+            typeString = new String (returnEmoji(valueFromSpinner));
         }
     }
 
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
     private char[] returnEmoji(String task_class) {
-        Log.d("returnEmoji", "returnEmoji: "+task_class);
+        Log.d("returnEmoji", "returnEmoji: " + task_class);
         if (task_class.equals("All"))
             return Character.toChars(0x1F4CB);
         if (task_class.equals("Work"))
@@ -294,8 +279,4 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         return Character.toChars(0x1F4CB);
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 }

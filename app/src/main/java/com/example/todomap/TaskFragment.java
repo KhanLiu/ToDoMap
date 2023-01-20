@@ -42,7 +42,7 @@ public class TaskFragment extends Fragment {
             DatabaseHelper.LAT,
             DatabaseHelper.LON,
             DatabaseHelper.DESC,
-            DatabaseHelper.STATUS
+//            DatabaseHelper.STATUS
     };
 
     final int[] to = new int[]{
@@ -54,7 +54,7 @@ public class TaskFragment extends Fragment {
             R.id.lat,
             R.id.lon,
             R.id.desc,
-            R.id.status,
+//            R.id.status,
     };
 
     @Override
@@ -84,7 +84,7 @@ public class TaskFragment extends Fragment {
                 TextView latTextView = (TextView) view.findViewById(R.id.lat);
                 TextView lonTextView = (TextView) view.findViewById(R.id.lon);
                 TextView descTextView = (TextView) view.findViewById(R.id.desc);
-                TextView statusTextView = (TextView) view.findViewById(R.id.status);
+//                TextView statusTextView = (TextView) view.findViewById(R.id.status);
 
                 String id = idTextView.getText().toString();
                 String title = titleTextView.getText().toString();
@@ -94,7 +94,7 @@ public class TaskFragment extends Fragment {
                 Double lat = Double.parseDouble(latTextView.getText().toString());
                 Double lon = Double.parseDouble(lonTextView.getText().toString());
                 String desc = descTextView.getText().toString();
-                Integer status = Integer.parseInt(statusTextView.getText().toString());
+//                Integer status = Integer.parseInt(statusTextView.getText().toString());
 
                 Intent modify_intent = new Intent(getActivity().getApplicationContext(), ModifyTaskActivity.class);
                 modify_intent.putExtra("id", id);
@@ -105,7 +105,7 @@ public class TaskFragment extends Fragment {
                 modify_intent.putExtra("latitude", lat);
                 modify_intent.putExtra("longitude", lon);
                 modify_intent.putExtra("desc", desc);
-                modify_intent.putExtra("status", status);
+//                modify_intent.putExtra("status", status);
 
                 startActivity(modify_intent);
             }
