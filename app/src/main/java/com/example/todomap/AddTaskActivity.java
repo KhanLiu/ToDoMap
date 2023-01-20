@@ -115,7 +115,6 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         lon = new_task_lon;
         addressEditText.setText(new_task_add);
 
-        // Add task button onClick
         addTodoBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 final String title = titleEditText.getText().toString();
