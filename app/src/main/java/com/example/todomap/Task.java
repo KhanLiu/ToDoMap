@@ -25,6 +25,10 @@ public class Task {
 
     }
 
+    public void setDone(){
+        this.type = "Done";
+    }
+
     public Integer get_id() {
         return _id;
     }

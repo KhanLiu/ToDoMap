@@ -1,16 +1,21 @@
 package com.example.todomap;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Canvas;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +25,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class TaskFragment extends Fragment {
 
@@ -54,9 +61,6 @@ public class TaskFragment extends Fragment {
             @Override
             public void onClick(Task task) {
 
-                Snackbar.make(view, "Item Clicked" + task.get_id(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
-//                Toast.makeText(getContext(), "Item Clicked" + task.get_id(), Toast.LENGTH_LONG).show();
-
                 Integer id = task.get_id();
                 String title = task.getTitle();
                 String type = task.getType();
@@ -82,6 +86,10 @@ public class TaskFragment extends Fragment {
         });
         recyclerView.setAdapter(myRecyclerviewAdapter);
         myRecyclerviewAdapter.notifyDataSetChanged();
+
+        // Swipe left or right
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callBackMethod);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
 
         // Folating buttion "add task"
@@ -150,4 +158,54 @@ public class TaskFragment extends Fragment {
         }
 
     }
+
+    // Swipe call back menthods
+    ItemTouchHelper.SimpleCallback callBackMethod = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            int position = viewHolder.getAdapterPosition();
+            int id = taskArrayList.get(position).get_id();
+
+            switch (direction){
+                case ItemTouchHelper.LEFT:
+                    // remove
+                    Log.d("onSwipedLeft", "onSwipedLeft: " + taskArrayList.get(position).get_id() );
+                    taskArrayList.remove(position);
+                    recyclerView.getAdapter().notifyItemRemoved(position);
+                    // remove from db
+                    dbManager.delete(id);
+                    break;
+                case ItemTouchHelper.RIGHT:
+                    // check or uncheck
+                    Log.d("onSwipedRight", "onSwipedRight: " + taskArrayList.get(position).getTitle());
+                    Task task = taskArrayList.get(position);
+                    recyclerView.getAdapter().notifyItemChanged(position);
+                    // update db
+                    task.type = new String(Character.toChars(0x2714));
+                    dbManager.update(id, task.title, task.type, task.time, task.address, task.latitude, task.longitude,task.description);
+                    break;
+            }
+        }
+
+        // Swipe decorator
+        @Override
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red))
+                    .addSwipeLeftActionIcon(R.drawable.ic_round_delete_24)
+                    .addSwipeRightBackgroundColor(ContextCompat.getColor(getActivity(),R.color.green))
+                    .addSwipeRightActionIcon(R.drawable.ic_round_done_24)
+                    .create()
+                    .decorate();
+
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        }
+    };
+
 }

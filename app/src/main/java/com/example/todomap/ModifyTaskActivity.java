@@ -66,7 +66,7 @@ public class ModifyTaskActivity extends AppCompatActivity implements AdapterView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTitle("Modify Record");
+        setTitle("Modify Todo");
         setContentView(R.layout.activity_modify_task);
 
         Intent intent = getIntent();
@@ -292,6 +292,8 @@ public class ModifyTaskActivity extends AppCompatActivity implements AdapterView
             return Character.toChars(0x1F4D6);
         if (task_type.equals("Life"))
             return Character.toChars(0x1F388);
+        if (task_type.equals("Travel"))
+            return Character.toChars(0x2708);
         if (task_type.equals("Other"))
             return Character.toChars(0x1F30D);
         if (task_type.equals("Done"))
@@ -303,18 +305,20 @@ public class ModifyTaskActivity extends AppCompatActivity implements AdapterView
     private int returnSpinnerPos(String emoji) {
         emoji = new String(emoji);
         Log.d("returnEmojiPos", "returnSpinnerPos: " + emoji);
-        if (emoji.equals(new String(Character.toChars(0x1F4CB))))
+        if (emoji.equals(new String(Character.toChars(0x1F4CB)))) // All
             return 0;
-        if (emoji.equals(new String(Character.toChars(0x1F4BC))))
+        if (emoji.equals(new String(Character.toChars(0x1F4BC)))) // Work
             return 1;
-        if (emoji.equals(new String(Character.toChars(0x1F4D6))))
+        if (emoji.equals(new String(Character.toChars(0x1F4D6)))) // Study
             return 2;
-        if (emoji.equals(new String(Character.toChars(0x1F388))))
+        if (emoji.equals(new String(Character.toChars(0x1F388)))) // Life
             return 3;
-        if (emoji.equals(new String(Character.toChars(0x1F30D))))
+        if (emoji.equals(new String(Character.toChars(0x2708)))) // Travel
             return 4;
-        if (emoji.equals(new String(Character.toChars(0x2714))))
+        if (emoji.equals(new String(Character.toChars(0x1F30D)))) // Other
             return 5;
+        if (emoji.equals(new String(Character.toChars(0x2714)))) // Done
+            return 6;
         return 0;
 
 

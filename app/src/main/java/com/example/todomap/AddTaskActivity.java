@@ -69,7 +69,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTitle("Add Record");
+        setTitle("Add Todo");
         setContentView(R.layout.activity_add_task);
 
         // Address
@@ -283,6 +283,8 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
             return Character.toChars(0x1F4D6);
         if (task_type.equals("Life"))
             return Character.toChars(0x1F388);
+        if (task_type.equals("Travel"))
+            return Character.toChars(0x2708);
         if (task_type.equals("Other"))
             return Character.toChars(0x1F30D);
         if (task_type.equals("Done"))

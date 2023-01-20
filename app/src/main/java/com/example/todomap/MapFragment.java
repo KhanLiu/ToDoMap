@@ -70,8 +70,8 @@ public class MapFragment extends Fragment {
     private Geocoder geocoder;
     private ImageButton search_on_map_btn, add_on_map_btn, route_btn;
     private EditText searchOnMap;
-    private String lat_new , lon_new , address_new = null;
-//    private LocationManager mLocationManager;
+    private String lat_new, lon_new, address_new = null;
+    //    private LocationManager mLocationManager;
 //    private Location location;
     String mode = "foot-walking";
     ActivityResultLauncher<String[]> locationPermissionRequest;
@@ -97,7 +97,7 @@ public class MapFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-
+    @SuppressLint("MissingPermission")
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -142,8 +142,8 @@ public class MapFragment extends Fragment {
                         // When clicked on map
                         // Initialize marker options
                         MarkerOptions markerOptions = new MarkerOptions();
-                        selectedPointLon = Double.toString(latLng.longitude);
-                        selectedPointLat = Double.toString(latLng.latitude);
+//                        selectedPointLon = Double.toString(latLng.longitude);
+//                        selectedPointLat = Double.toString(latLng.latitude);
                         // Set position of marker
                         markerOptions.position(latLng);
                         // Set title of marker
@@ -158,8 +158,8 @@ public class MapFragment extends Fragment {
 //                        add_task_on_map.putExtra("new_task_lat_1", selectedPointLat);
 //                        add_task_on_map.putExtra("new_task_lon_1", selectedPointLon);
                         Intent add_task_by_search = new Intent(getActivity(), AddTaskActivity.class);
-                        add_task_by_search.putExtra("new_task_lat", selectedPointLat);
-                        add_task_by_search.putExtra("new_task_lon", selectedPointLon);
+                        add_task_by_search.putExtra("new_task_lat", latLng.latitude);
+                        add_task_by_search.putExtra("new_task_lon", latLng.longitude);
                         startActivity(add_task_by_search);
                     }
                 });
