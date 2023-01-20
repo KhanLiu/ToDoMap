@@ -273,21 +273,21 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
 
     }
 
-    private char[] returnEmoji(String task_class) {
-        Log.d("returnEmoji", "returnEmoji: " + task_class);
-        if (task_class.equals("All"))
+    // return emoji according to task type
+    private char[] returnEmoji(String task_type) {
+        Log.d("returnEmoji", "returnEmoji: " + task_type);
+        if (task_type.equals("All"))
             return Character.toChars(0x1F4CB);
-        if (task_class.equals("Work"))
+        if (task_type.equals("Work"))
             return Character.toChars(0x1F4BC);
-        if (task_class.equals("Study"))
+        if (task_type.equals("Study"))
             return Character.toChars(0x1F4D6);
-        if (task_class.equals("Life"))
+        if (task_type.equals("Life"))
             return Character.toChars(0x1F388);
-        if (task_class.equals("Other"))
+        if (task_type.equals("Other"))
             return Character.toChars(0x1F30D);
-        if (task_class.equals("Done"))
+        if (task_type.equals("Done"))
             return Character.toChars(0x2714);
         return Character.toChars(0x1F4CB);
     }
-
 }

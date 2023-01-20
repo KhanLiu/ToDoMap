@@ -10,7 +10,6 @@ public class Task {
     String address;
     Double latitude;
     Double longitude;
-//    Integer status;
 
     public Task(Integer _id, String title, String type, String description, String time,
                 String address, Double latitude, Double longitude) {
@@ -23,7 +22,6 @@ public class Task {
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
-//        this.status = status;
 
     }
 
@@ -59,8 +57,4 @@ public class Task {
         return longitude;
     }
 
-
-//    public Integer getStatus() {
-//        return status;
-//    }
 }

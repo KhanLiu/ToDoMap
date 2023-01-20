@@ -190,12 +190,8 @@ public class ModifyTaskActivity extends AppCompatActivity implements AdapterView
 
 }
 
+    // return to main activity
     public void returnHome() {
-
-//        Fragment fragment = new TasksFragment();
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().replace(R.id.frame_layout, fragment).commit();
-
         Intent home_intent = new Intent(getApplicationContext(), MainActivity.class)
                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(home_intent);
@@ -271,33 +267,12 @@ public class ModifyTaskActivity extends AppCompatActivity implements AdapterView
         timePickerDialog.show();
     }
 
-
-//    // Now Date
-//    private String getNowDate() {
-//        Calendar cal = Calendar.getInstance();
-//        year = cal.get(Calendar.YEAR);
-//        month = cal.get(Calendar.MONTH);
-//        day = cal.get(Calendar.DAY_OF_MONTH);
-//        month = month + 1;
-//        return getMonthFormat(month) + " " + day + " " + year;
-//    }
-
-//    // Now time
-//    private String getNowTime() {
-//        Calendar cal = Calendar.getInstance();
-//        hour = cal.get(Calendar.HOUR_OF_DAY) + 1;
-//        minute = cal.get(Calendar.MINUTE);
-//        return String.format(Locale.getDefault(), "%02d:%02d", hour, minute);
-//    }
-
-
     // Type spinner
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
         if (adapterView.getId() == R.id.task_type_spinner) {
             String valueFromSpinner = adapterView.getItemAtPosition(position).toString();
             typeString = new String(returnEmoji(valueFromSpinner));
-//            typeEditText.setText(new String(returnEmoji(valueFromSpinner)));
         }
     }
 
@@ -306,23 +281,25 @@ public class ModifyTaskActivity extends AppCompatActivity implements AdapterView
 
     }
 
-    private char[] returnEmoji(String task_class) {
-        Log.d("returnEmoji", "returnEmoji: " + task_class);
-        if (task_class.equals("All"))
+    // return emoji according to task type
+    private char[] returnEmoji(String task_type) {
+        Log.d("returnEmoji", "returnEmoji: " + task_type);
+        if (task_type.equals("All"))
             return Character.toChars(0x1F4CB);
-        if (task_class.equals("Work"))
+        if (task_type.equals("Work"))
             return Character.toChars(0x1F4BC);
-        if (task_class.equals("Study"))
+        if (task_type.equals("Study"))
             return Character.toChars(0x1F4D6);
-        if (task_class.equals("Life"))
+        if (task_type.equals("Life"))
             return Character.toChars(0x1F388);
-        if (task_class.equals("Other"))
+        if (task_type.equals("Other"))
             return Character.toChars(0x1F30D);
-        if (task_class.equals("Done"))
+        if (task_type.equals("Done"))
             return Character.toChars(0x2714);
         return Character.toChars(0x1F4CB);
     }
 
+    // return type spinner position based on emoji
     private int returnSpinnerPos(String emoji) {
         emoji = new String(emoji);
         Log.d("returnEmojiPos", "returnSpinnerPos: " + emoji);
