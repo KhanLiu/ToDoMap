@@ -36,10 +36,10 @@ public class DBManager {
     public String LAT = "latitude";
     public String LON = "longitude";
     public String DESC = "description";
-    public String STATUS = "status";
+//    public String STATUS = "status";
 
     // Insert a new row into table
-    public void insert(String title, String type, String time, String address, Double lat, Double lon, String desc, Integer status) {
+    public void insert(String title, String type, String time, String address, Double lat, Double lon, String desc) {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DatabaseHelper.TITLE, title);
         contentValue.put(DatabaseHelper.TYPE, type);
@@ -48,7 +48,7 @@ public class DBManager {
         contentValue.put(DatabaseHelper.LAT, lat);
         contentValue.put(DatabaseHelper.LON, lon);
         contentValue.put(DatabaseHelper.DESC, desc);
-        contentValue.put(DatabaseHelper.STATUS, status);
+//        contentValue.put(DatabaseHelper.STATUS, status);
 
         database.insert(DatabaseHelper.TABLE_NAME, null, contentValue);
     }
@@ -64,7 +64,7 @@ public class DBManager {
                 DatabaseHelper.LAT,
                 DatabaseHelper.LON,
                 DatabaseHelper.DESC,
-                DatabaseHelper.STATUS
+//                DatabaseHelper.STATUS
         };
         Cursor cursor = database.query(DatabaseHelper.TABLE_NAME, columns, null, null, null, null, null);
         if (cursor != null) {
@@ -74,7 +74,7 @@ public class DBManager {
     }
 
     // Update a row into table
-    public int update(long _id, String title, String type, String time, String address, Double lat, Double lon, String desc, Integer status) {
+    public int update(int _id, String title, String type, String time, String address, Double lat, Double lon, String desc) {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DatabaseHelper.TITLE, title);
         contentValue.put(DatabaseHelper.TYPE, type);
@@ -83,7 +83,7 @@ public class DBManager {
         contentValue.put(DatabaseHelper.LAT, lat);
         contentValue.put(DatabaseHelper.LON, lon);
         contentValue.put(DatabaseHelper.DESC, desc);
-        contentValue.put(DatabaseHelper.STATUS, status);
+//        contentValue.put(DatabaseHelper.STATUS, status);
 
         int i = database.update(DatabaseHelper.TABLE_NAME, contentValue, DatabaseHelper._ID + " = " + _id, null);
         return i;
