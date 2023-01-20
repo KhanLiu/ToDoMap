@@ -1,7 +1,6 @@
 package com.example.todomap;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,7 @@ public class MyRecyclerviewAdapter extends RecyclerView.Adapter<MyRecyclerviewAd
     @Override
     public MyRecyclerviewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(context).inflate(R.layout.task_item2, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.task_item, parent, false);
         return new MyViewHolder(v);
     }
 
@@ -37,7 +36,7 @@ public class MyRecyclerviewAdapter extends RecyclerView.Adapter<MyRecyclerviewAd
 
         Task task = taskArrayList.get(position);
         holder.titleText.setText(task.title);
-        holder.typetext.setText(task.type);
+        holder.typeText.setText(task.type);
         holder.descText.setText(task.description);
         holder.timeText.setText(task.time);
         holder.addressText.setText(task.address);
@@ -54,7 +53,7 @@ public class MyRecyclerviewAdapter extends RecyclerView.Adapter<MyRecyclerviewAd
 
         TextView titleText;
         TextView descText;
-        TextView typetext;
+        TextView typeText;
         TextView timeText;
         TextView addressText;
 
@@ -62,7 +61,7 @@ public class MyRecyclerviewAdapter extends RecyclerView.Adapter<MyRecyclerviewAd
             super(itemView);
             titleText = itemView.findViewById(R.id.title_textview);
             descText = itemView.findViewById(R.id.desc_textview);
-            typetext = itemView.findViewById(R.id.type_textview);
+            typeText = itemView.findViewById(R.id.type_textview);
             timeText = itemView.findViewById(R.id.time_textview);
             addressText = itemView.findViewById(R.id.address_textview);
 

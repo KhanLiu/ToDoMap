@@ -4,147 +4,31 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+
 public class TaskFragment extends Fragment {
 
+    private View view;
+    private ArrayList<Task> taskArrayList;
     private DBManager dbManager;
-
     private Cursor cursor;
-
-    private ListView listView;
-
-    private SimpleCursorAdapter adapter;
-
-    View view;
-
-    final String[] from = new String[]{
-            DatabaseHelper._ID,
-            DatabaseHelper.TITLE,
-            DatabaseHelper.TYPE,
-            DatabaseHelper.TIME,
-            DatabaseHelper.ADDRESS,
-            DatabaseHelper.LAT,
-            DatabaseHelper.LON,
-            DatabaseHelper.DESC,
-//            DatabaseHelper.STATUS
-    };
-
-    final int[] to = new int[]{
-            R.id.id,
-            R.id.title,
-            R.id.type,
-            R.id.time,
-            R.id.address,
-            R.id.lat,
-            R.id.lon,
-            R.id.desc,
-//            R.id.status,
-    };
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-
-        dbManager = new DBManager(getActivity());
-        dbManager.open();
-        Cursor cursor = dbManager.fetch();
-
-        listView = (ListView) view.findViewById(R.id.task_list_view);
-        listView.setEmptyView(view.findViewById(R.id.empty));
-
-        adapter = new SimpleCursorAdapter(getActivity(), R.layout.task_item, cursor, from, to, 0);
-        adapter.notifyDataSetChanged();
-
-        listView.setAdapter(adapter);
-
-        // OnCLickListiner For List Items
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long viewId) {
-                TextView idTextView = (TextView) view.findViewById(R.id.id);
-                TextView titleTextView = (TextView) view.findViewById(R.id.title);
-                TextView typeTextView = (TextView) view.findViewById(R.id.type);
-                TextView timeTextView = (TextView) view.findViewById(R.id.time);
-                TextView addressTextView = (TextView) view.findViewById(R.id.address);
-                TextView latTextView = (TextView) view.findViewById(R.id.lat);
-                TextView lonTextView = (TextView) view.findViewById(R.id.lon);
-                TextView descTextView = (TextView) view.findViewById(R.id.desc);
-//                TextView statusTextView = (TextView) view.findViewById(R.id.status);
-
-                String id = idTextView.getText().toString();
-                String title = titleTextView.getText().toString();
-                String type = typeTextView.getText().toString();
-                String time = timeTextView.getText().toString();
-                String address = addressTextView.getText().toString();
-                Double lat = Double.parseDouble(latTextView.getText().toString());
-                Double lon = Double.parseDouble(lonTextView.getText().toString());
-                String desc = descTextView.getText().toString();
-//                Integer status = Integer.parseInt(statusTextView.getText().toString());
-
-                Intent modify_intent = new Intent(getActivity().getApplicationContext(), ModifyTaskActivity.class);
-                modify_intent.putExtra("id", id);
-                modify_intent.putExtra("title", title);
-                modify_intent.putExtra("type", type);
-                modify_intent.putExtra("time", time);
-                modify_intent.putExtra("address", address);
-                modify_intent.putExtra("latitude", lat);
-                modify_intent.putExtra("longitude", lon);
-                modify_intent.putExtra("desc", desc);
-//                modify_intent.putExtra("status", status);
-
-                startActivity(modify_intent);
-            }
-        });
-
-        FloatingActionButton fab = view.findViewById(R.id.fab_add);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
-                Intent add_mem = new Intent(getActivity(), AddTaskActivity.class);
-                startActivity(add_mem);
-            }
-        });
-
-    }
-
-
-
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.menu_task_view, menu);
-////        super.onCreateOptionsMenu(menu, inflater);
-//    }
-//
-//    // menu item
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        int id = item.getItemId();
-//        if (id == R.id.add_record) {
-//
-//            Intent add_mem = new Intent(getActivity(), AddTaskActivity.class);
-//            startActivity(add_mem);
-//
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    private RecyclerView recyclerView;
+    private FloatingActionButton fab;
 
 
     @Override
@@ -152,9 +36,118 @@ public class TaskFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_task, container, false);
-
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        dataInitialize();
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.task_recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity(), LinearLayout.VERTICAL));
+
+        MyRecyclerviewAdapter myRecyclerviewAdapter = new MyRecyclerviewAdapter(getContext(), taskArrayList, new OnItemClickListener() {
+            @Override
+            public void onClick(Task task) {
+
+                Snackbar.make(view, "Item Clicked" + task.get_id(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+//                Toast.makeText(getContext(), "Item Clicked" + task.get_id(), Toast.LENGTH_LONG).show();
+
+                Integer id = task.get_id();
+                String title = task.getTitle();
+                String type = task.getType();
+                String time = task.getTime();
+                String address = task.getAddress();
+                Double lat = task.getLatitude();
+                Double lon = task.getLongitude();
+                String desc = task.getDescription();
+
+                Intent modify_intent = new Intent(getActivity().getApplicationContext(), ModifyTaskActivity.class);
+
+                modify_intent.putExtra("id", id);
+                modify_intent.putExtra("title", title);
+                modify_intent.putExtra("type", type);
+                modify_intent.putExtra("time", time);
+                modify_intent.putExtra("address", address);
+                modify_intent.putExtra("lat", lat);
+                modify_intent.putExtra("lon", lon);
+                modify_intent.putExtra("desc", desc);
+
+                startActivity(modify_intent);
+            }
+        });
+        recyclerView.setAdapter(myRecyclerviewAdapter);
+        myRecyclerviewAdapter.notifyDataSetChanged();
+
+
+        // Folating buttion "add task"
+        fab = view.findViewById(R.id.fab_add);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent add_intent = new Intent(getActivity(), AddTaskActivity.class);
+                startActivity(add_intent);
+            }
+        });
+
+        // Hide floatActionButton when scrolling
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 || dy < 0 && fab.isShown())
+                    fab.hide();
+            }
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    fab.show();
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
+    }
+
+    private void dataInitialize() {
+
+        taskArrayList = new ArrayList<>();
+        Task task;
+
+        dbManager = new DBManager(getActivity());
+        dbManager.open();
+        cursor = dbManager.fetch();
+        int length = cursor.getCount();
+
+        int _idIndex = cursor.getColumnIndex(DatabaseHelper._ID);
+        int titleIndex = cursor.getColumnIndex(DatabaseHelper.TITLE);
+        int typeIndex = cursor.getColumnIndex(DatabaseHelper.TYPE);
+        int descIndex = cursor.getColumnIndex(DatabaseHelper.DESC);
+        int timeIndex = cursor.getColumnIndex(DatabaseHelper.TIME);
+        int addressIndex = cursor.getColumnIndex(DatabaseHelper.ADDRESS);
+        int latIndex = cursor.getColumnIndex(DatabaseHelper.LAT);
+        int lonIndex = cursor.getColumnIndex(DatabaseHelper.LON);
+//        int statusIndex = cursor.getColumnIndex(DatabaseHelper.STATUS);
+
+        for (int i = 0; i < length; i++) {
+            task = new Task(
+                    Integer.parseInt(cursor.getString(_idIndex)),
+                    cursor.getString(titleIndex),
+                    cursor.getString(typeIndex),
+                    cursor.getString(descIndex),
+                    cursor.getString(timeIndex),
+                    cursor.getString(addressIndex),
+                    cursor.getDouble(latIndex),
+                    cursor.getDouble(lonIndex)
+//                    cursor.getInt(statusIndex)
+            );
+
+            taskArrayList.add(task);
+            cursor.moveToNext();
+        }
+
+    }
 }

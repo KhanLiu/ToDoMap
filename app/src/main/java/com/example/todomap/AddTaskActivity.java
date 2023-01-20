@@ -106,6 +106,15 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         dbManager = new DBManager(this);
         dbManager.open();
 
+        // Add task by map fragment
+        Intent add_task_by_search = getIntent();
+        Double new_task_lat = add_task_by_search.getDoubleExtra("new_task_lat", 0);
+        Double new_task_lon = add_task_by_search.getDoubleExtra("new_task_lon", 0);
+        String new_task_add = add_task_by_search.getStringExtra("new_task_add");
+        lat = new_task_lat;
+        lon = new_task_lon;
+        addressEditText.setText(new_task_add);
+
         // Add task button onClick
         addTodoBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -114,7 +123,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
                 final String address = addressEditText.getText().toString();
 
                 final String type = typeString;
-                final String time = dateString + " " + timeString;
+                final String time = dateString + ", " + timeString;
 
                 if (title.equals("")) {
                     Snackbar.make(v, "Title is required!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
@@ -134,6 +143,8 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
 
                             // insert a new task
                             dbManager.insert(title, type, time, address, lat, lon, desc);
+
+                            // return to main activity
                             Intent main = new Intent(AddTaskActivity.this, MainActivity.class)
                                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(main);

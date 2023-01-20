@@ -23,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.w3c.dom.Text;
 
 import java.io.IOException;
@@ -30,7 +32,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class ModifyTaskActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class ModifyTaskActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private Button updateBtn, deleteBtn;
 
@@ -57,7 +59,7 @@ public class ModifyTaskActivity extends AppCompatActivity implements AdapterView
     // sqlite datebase
     private DBManager dbManager;
 
-    private long _id;
+    private Integer _id;
 
 
     @Override
@@ -69,24 +71,33 @@ public class ModifyTaskActivity extends AppCompatActivity implements AdapterView
 
         Intent intent = getIntent();
 
-        Integer _id = intent.getIntExtra("id", 0);
+        Integer id = intent.getIntExtra("id", 0);
         String title = intent.getStringExtra("title");
         String type = intent.getStringExtra("type");
         String time = intent.getStringExtra("time");
         String address = intent.getStringExtra("address");
+        Double oldLat = intent.getDoubleExtra("lat", 0);
+        Double oldLon = intent.getDoubleExtra("lon", 0);
         String desc = intent.getStringExtra("desc");
 
-//        _id = Long.parseLong(id);
+        _id = id;
 
         // Address
-        addressEditText = (EditText) findViewById(R.id.address_edittext);
+        addressEditText = findViewById(R.id.address_edittext);
+        addressEditText.setText(address);
+        lat = oldLat;
+        lon = oldLon;
 
         //Title and Description
-        titleEditText = (EditText) findViewById(R.id.title_edittext);
-        descEditText = (EditText) findViewById(R.id.desc_edittext);
+        titleEditText = findViewById(R.id.title_edittext);
+        descEditText = findViewById(R.id.desc_edittext);
         titleEditText.setText(title);
         descEditText.setText(desc);
 
+        // Time
+        String[] timeSplit = time.split(", ");
+        dateString = timeSplit[0];
+        timeString = timeSplit[1];
         // Date picker
         dateButton = findViewById(R.id.date_picker_btn);
 //        dateString = getNowDate();
@@ -107,83 +118,81 @@ public class ModifyTaskActivity extends AppCompatActivity implements AdapterView
         taskTypeSpinner.setAdapter(typeAdapter);
         taskTypeSpinner.setSelection(returnSpinnerPos(type.toString()));
 
-        // Add task button
-        updateBtn = (Button) findViewById(R.id.btn_update);
+        // Update task button
+        updateBtn = findViewById(R.id.btn_update);
+        updateBtn.setOnClickListener(this);
+        // Delete task button
+        deleteBtn = findViewById(R.id.btn_delete);
+        deleteBtn.setOnClickListener(this);
 
         // Geocoder
         geocoder = new Geocoder(this);
         dbManager = new DBManager(this);
         dbManager.open();
 
-//        updateBtn.setOnClickListener(this);
-//        deleteBtn.setOnClickListener(this);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_update:
 
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.btn_update:
-//
-//                if (latText.getText().toString() != null &
-//                        latText.getText().toString() != "Invalid" &
-//                        lonText.getText().toString() != null &
-//                        lonText.getText().toString() != "Invalid") {
-//
-//                    String title = titleEditText.getText().toString();
-//                    String type = typeEditText.getText().toString();
-//                    String time = timeEditText.getText().toString();
-//                    String address = addressEditText.getText().toString();
-//                    Double lat = Double.parseDouble(latText.getText().toString());
-//                    Double lon = Double.parseDouble(lonText.getText().toString());
-//                    String desc = descEditText.getText().toString();
-////                    Integer status = Integer.parseInt(statusText.getText().toString());
-//
-//                    dbManager.update(_id, title, type, time, address, lat, lon, desc);
-//                    this.returnHome();
-//                } else {
-//                    Log.d("insert", "Insert failed! No valid address!");
-//                }
-//                break;
-//
-//            case R.id.btn_delete:
-//                dbManager.delete(_id);
-//                this.returnHome();
-//                break;
-//
-//            case R.id.search_location_btn:
-//                try {
-//                    String address = addressEditText.getText().toString();
-//                    List<Address> addresses = geocoder.getFromLocationName(address, 1);
-//                    if (addresses.size() > 0) {
-//                        Address address1 = addresses.get(0);
-//                        Double lat = address1.getLatitude();
-//                        Double lon = address1.getLongitude();
-//                        latText.setText(Double.toString(lat));
-//                        lonText.setText(Double.toString(lon));
-//                        Log.d("address", "location1: " + lat + lon);
-//                    }else{
-//                        Log.d("address", "Invalid address! ");
-//                        String invalid = "Invalid";
-//                        latText.setText(invalid);
-//                        lonText.setText(invalid);
-//                    }
-//
-//                } catch (IOException e) {
-//                    String invalid = "Invalid";
-//                    latText.setText(invalid);
-//                    lonText.setText(invalid);
-//                    Log.d("address", "get location failed!" );
-//                    e.printStackTrace();
-//                }
-//
-//                break;
-//        }
-//    }
+                final String title = titleEditText.getText().toString();
+                final String desc = descEditText.getText().toString();
+                final String address = addressEditText.getText().toString();
+
+                final String type = typeString;
+                final String time = dateString + ", " + timeString;
+
+                if (title.equals("")) {
+                    Snackbar.make(v, "Title is required!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                } else if (address.equals("")) {
+                    Snackbar.make(v, "Address is required!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                } else {
+                    //Geocoding
+                    try {
+                        List<Address> addresses = geocoder.getFromLocationName(address, 1);
+                        if (addresses.size() > 0) {
+                            Address address1 = addresses.get(0);
+                            lat = address1.getLatitude();
+                            lon = address1.getLongitude();
+//                            latText.setText(Double.toString(lat));
+//                            lonText.setText(Double.toString(lon));
+                            Log.d("address", "location1: " + lat + lon);
+
+                            // insert a new task
+                            dbManager.update(_id, title, type, time, address, lat, lon, desc);
+                            this.returnHome();
+
+                        } else {
+                            Snackbar.make(v, "Invalid address!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                            Log.d("address", "Invalid address! ");
+//                            latText.setText("0");
+//                            lonText.setText("0");
+                        }
+                    } catch (IOException e) {
+                        Snackbar.make(v, "Invalid geocoder!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                        Log.d("address", "get location failed!");
+//                        latText.setText("0");
+//                        lonText.setText("0");
+                        e.printStackTrace();
+                    }
+
+                }
+
+        break;
+
+        case R.id.btn_delete:
+        dbManager.delete(_id);
+        this.returnHome();
+        break;
+    }
+
+}
 
     public void returnHome() {
 
-//        Fragment fragment = new TaskFragment();
+//        Fragment fragment = new TasksFragment();
 //        FragmentManager fragmentManager = getSupportFragmentManager();
 //        fragmentManager.beginTransaction().replace(R.id.frame_layout, fragment).commit();
 

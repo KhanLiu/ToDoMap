@@ -74,7 +74,7 @@ public class DBManager {
     }
 
     // Update a row into table
-    public int update(long _id, String title, String type, String time, String address, Double lat, Double lon, String desc) {
+    public int update(int _id, String title, String type, String time, String address, Double lat, Double lon, String desc) {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DatabaseHelper.TITLE, title);
         contentValue.put(DatabaseHelper.TYPE, type);
