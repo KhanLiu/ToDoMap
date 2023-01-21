@@ -143,8 +143,8 @@ public class MapFragment<theme> extends Fragment {
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
                         mMap.addMarker(markerOptions);
                         Intent add_task_by_search = new Intent(getActivity(), AddTaskActivity.class);
-                        add_task_by_search.putExtra("new_task_lat", selectedPointLat);
-                        add_task_by_search.putExtra("new_task_lon", selectedPointLon);
+                        add_task_by_search.putExtra("new_task_lat", latLng.latitude);
+                        add_task_by_search.putExtra("new_task_lon", latLng.longitude);
                         startActivity(add_task_by_search);
                     }
                 });

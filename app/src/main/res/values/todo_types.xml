@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="todo_types">
+        <item>All</item>
+        <item>Work</item>
+        <item>Study</item>
+        <item>Life</item>
+        <item>Travel</item>
+        <item>Other</item>
+        <item>Done</item>
+<!--        <item>All&#128203;</item>-->
+<!--        <item>Work&#128188;</item>-->
+<!--        <item>Study&#128214;</item>-->
+<!--        <item>Life&#127880;</item>-->
+<!--        <item>Other&#127757;</item>-->
+<!--        <item>Done&#10004;</item>-->
+    </string-array>
+</resources>
