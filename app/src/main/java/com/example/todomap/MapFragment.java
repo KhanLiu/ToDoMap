@@ -29,21 +29,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -61,54 +56,43 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
-public class MapFragment extends Fragment {
+public class MapFragment<theme> extends Fragment {
 
     View view;
     private String selectedPointLat, selectedPointLon = null;
     private GoogleMap mMap;
     private DBManager dbManager;
     private Geocoder geocoder;
+    private Location location;
+    private LatLng markerLocation;
     private ImageButton search_on_map_btn, add_on_map_btn, route_btn;
     private EditText searchOnMap;
-    private String lat_new, lon_new, address_new = null;
-    //    private LocationManager mLocationManager;
-//    private Location location;
+    private String lat_new , lon_new , address_new = null;
+    boolean markerClick;
+    FusedLocationProviderClient client;
     String mode = "foot-walking";
     ActivityResultLauncher<String[]> locationPermissionRequest;
-//    LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-//    Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_task_view, menu);
-//        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-        if (id == R.id.add_record) {
-
-            Intent add_mem = new Intent(getActivity(), AddTaskActivity.class);
-            startActivity(add_mem);
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressLint("MissingPermission")
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // initialize view
-        setHasOptionsMenu(true);
-        view = inflater.inflate(R.layout.fragment_map, container, false);
 
-        // initialize map fragment
+        view = inflater.inflate(R.layout.fragment_map, container, false);
         SupportMapFragment supportMapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.map);
+        client = LocationServices.getFusedLocationProviderClient(getActivity());
+//        location = client.getCurrentLocation();
+        LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location0) {
+                location = location0;
+            }
+        };
+        LocationManager locationManager = (LocationManager) this.getActivity().getSystemService(Context.LOCATION_SERVICE);
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+
 
         locationPermissionRequest = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
                     Boolean fineLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false);
@@ -122,13 +106,25 @@ public class MapFragment extends Fragment {
                     }
                 }
         );
-//        Location location = mLocationManager.getLastKnownLocation();
         // async map
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull GoogleMap map) {
+//                Intent switchOptions = getActivity().getIntent();
+//                String theme = switchOptions.getStringExtra("themeExtra");
+//                String basemap = switchOptions.getStringExtra("basemapExtra");
                 mMap = map;
                 // When map is loaded
+//                if (theme == "normal") {
+//                    mMap.setMapStyle()
+//                }else if (theme == "satellite"){
+//                    mMap.setMapStyle();
+//                }
+//                if (basemap == "normal") {
+//                    mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+//                }else if (basemap == "satellite"){
+//                    mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+//                }
                 mMap.getUiSettings().setZoomControlsEnabled(true);
                 mMap.getUiSettings().setMapToolbarEnabled(false);
                 String[] PERMISSIONS = {
@@ -139,38 +135,27 @@ public class MapFragment extends Fragment {
                 mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
                     public void onMapClick(@NonNull LatLng latLng) {
-                        // When clicked on map
-                        // Initialize marker options
                         MarkerOptions markerOptions = new MarkerOptions();
-//                        selectedPointLon = Double.toString(latLng.longitude);
-//                        selectedPointLat = Double.toString(latLng.latitude);
-                        // Set position of marker
+                        selectedPointLon = Double.toString(latLng.longitude);
+                        selectedPointLat = Double.toString(latLng.latitude);
                         markerOptions.position(latLng);
-                        // Set title of marker
                         markerOptions.title(latLng.latitude + " : " + latLng.longitude);
-                        // Remove all marker
-//                        mMap.clear();
-                        // Animating to zoom the marker
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                        // Add marker on map
                         mMap.addMarker(markerOptions);
-//                        Intent add_task_on_map = new Intent(getActivity(), AddTaskActivity.class);
-//                        add_task_on_map.putExtra("new_task_lat_1", selectedPointLat);
-//                        add_task_on_map.putExtra("new_task_lon_1", selectedPointLon);
                         Intent add_task_by_search = new Intent(getActivity(), AddTaskActivity.class);
                         add_task_by_search.putExtra("new_task_lat", latLng.latitude);
                         add_task_by_search.putExtra("new_task_lon", latLng.longitude);
                         startActivity(add_task_by_search);
                     }
                 });
-//                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener(){
-//                    @Override
-//                    public boolean onMarkerClick(@NonNull Marker marker) {
-//                        return false;
-//                    }
-//
-//                });
-
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(@NonNull Marker marker) {
+                        markerLocation = marker.getPosition();
+                        markerClick = true;
+                        return false;
+                    }
+                });
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
                 MarkerOptions taskMarkerOption = new MarkerOptions();
                 dbManager = new DBManager(getActivity());
@@ -201,6 +186,7 @@ public class MapFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         search_on_map_btn = (ImageButton) view.findViewById(R.id.search_on_map_btn);
         add_on_map_btn = (ImageButton) view.findViewById(R.id.add_on_map_btn);
+        route_btn = (ImageButton) view.findViewById(R.id.route_btn);
         geocoder = new Geocoder(getActivity());
         search_on_map_btn.setOnClickListener(new View.OnClickListener() {
             EditText searchOnMap = (EditText) view.findViewById(R.id.searchOnMap);
@@ -222,23 +208,17 @@ public class MapFragment extends Fragment {
                         address_new = address;
                         info = address;
                         status = 100;
-//                latText.setText(Double.toString(lat));
-//                lonText.setText(Double.toString(lon));
                         Log.d("address", "location1: " + lat + lon);
                     } else {
                         Log.d("address", "Invalid address! ");
                         info = "Error 1: Invalid Address!";
                         status = 1;
-//                latText.setText(invalid);
-//                lonText.setText(invalid);
                     }
 
                 } catch (IOException e) {
                     Log.d("address", "get location failed!");
                     info = "Error 2: Get Location Failed!";
                     status = 2;
-//            latText.setText(invalid);
-//            lonText.setText(invalid);
                     e.printStackTrace();
                 }
                 searchOnMap.setText(info);
@@ -265,22 +245,26 @@ public class MapFragment extends Fragment {
             }
         });
 
-//        route_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String url =
-//                        "https://api.openrouteservice.org/v2/directions/"
-//                                + mode
-//                                + "?api_key=5b3ce3597851110001cf624841edb16aa15a42e9a8ef6b30efcf721d"
-//                                + "&start="
-//                                + location.getLongitude() + ","
-//                                + location.getLatitude()
-//                                + "&end="
-//                                + selectedPointLon + ","
-//                                + selectedPointLat;
-//                new DownloadGeoJsonFile().execute(url);
-//            }
-//        });
+        route_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                double lon =13.737;
+                double lat = 51.041;
+                if (markerClick){
+                    String url =
+                            "https://api.openrouteservice.org/v2/directions/"
+                                    + mode
+                                    + "?api_key=5b3ce3597851110001cf624841edb16aa15a42e9a8ef6b30efcf721d"
+                                    + "&start="
+                                    + lon + ","
+                                    + lat
+                                    + "&end="
+                                    + markerLocation.longitude + ","
+                                    + markerLocation.latitude;
+                    new DownloadGeoJsonFile().execute(url);
+                }
+            }
+        });
     }
 
     private class DownloadGeoJsonFile extends AsyncTask<String, Void, GeoJsonLayer> {
@@ -296,7 +280,6 @@ public class MapFragment extends Fragment {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 
                 while ((line = reader.readLine()) != null) {
-                    // Read and save each line of the stream
                     result.append(line);
                 }
 

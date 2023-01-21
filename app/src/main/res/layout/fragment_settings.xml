@@ -1,16 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_700"
+    android:background="@color/cardview_light_background"
     tools:context=".SettingsFragment">
 
     <TextView
+        android:id="@+id/textSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="20dp"
-        android:text="Settings Fragment" />
+        android:layout_gravity="left"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+        android:text="Settings" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textGeneral"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:textSize="15dp"
+        android:textColor="@color/gray"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+        android:layout_below="@id/textSettings"
+        android:text="GENERAL" />
+
+
+    <Switch
+        android:id="@+id/switchMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textGeneral"
+        android:text="Switch Mode"
+        android:textSize="20dp"
+        android:showText="true"
+        android:textOff="Light"
+        android:textOn="Dark"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"/>
+
+    <TextView
+        android:id="@+id/textMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:textSize="15dp"
+        android:textColor="@color/gray"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+        android:layout_below="@id/switchMode"
+        android:text="MAP" />
+
+    <Switch
+        android:id="@+id/switchBaseMap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textMap"
+        android:text="Switch Base Map"
+        android:textSize="20dp"
+        android:showText="true"
+        android:textOff="Normal"
+        android:textOn="Satellite"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"/>
+
+    <Switch
+        android:id="@+id/switchNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/switchBaseMap"
+        android:text="Switch Navigation Mode"
+        android:textSize="20dp"
+        android:showText="true"
+        android:textOff="Walk"
+        android:textOn="Car"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"/>
+
+    <TextView
+        android:id="@+id/textAbout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:textSize="15dp"
+        android:textColor="@color/gray"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+        android:layout_below="@id/switchNavigation"
+        android:text="ABOUT" />
+
+    <Button
+        android:id="@+id/buttonHelp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/white"
+        android:layout_below="@id/textAbout"
+        android:textSize="20dp"
+        android:text="Help"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:id="@+id/buttonAboutUs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/white"
+        android:layout_below="@id/buttonHelp"
+        android:textSize="20dp"
+        android:text="About Us"
+        android:textAllCaps="false"/>
+
+</RelativeLayout>
