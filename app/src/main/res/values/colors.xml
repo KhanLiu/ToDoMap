@@ -11,4 +11,6 @@
     <color name="red">#F55050</color>
     <color name="mint">#9DF1DF</color>
     <color name="green">#03C988</color>
+    <color name="blue_green">#00CCBF</color>
+    <color name="dark_green">#3F7C85</color>
 </resources>

@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/background_color"
     tools:context=".MapFragment">
     <EditText
         android:id="@+id/searchOnMap"
-        android:shadowColor="@color/design_default_color_primary_dark"
+        android:shadowColor="?attr/text_color"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_marginLeft="10dp"
@@ -18,9 +19,9 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_toLeftOf="@id/add_on_map_btn"
+        android:backgroundTint="?attr/image_button_background"
         android:src="@drawable/search_icon"
         android:scaleType="fitCenter"
-        android:background="@color/white"
         android:padding="10dp"/>
 
     <ImageButton
@@ -28,9 +29,9 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_toLeftOf="@id/route_btn"
+        android:backgroundTint="?attr/image_button_background"
         android:src="@drawable/add_icon"
         android:scaleType="fitCenter"
-        android:background="@color/white"
         android:padding="10dp"/>
 
     <ImageButton
@@ -38,9 +39,9 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentRight="true"
+        android:backgroundTint="?attr/image_button_background"
         android:src="@drawable/route_icon"
         android:scaleType="fitCenter"
-        android:background="@color/white"
         android:padding="10dp"/>
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"

@@ -1,6 +1,7 @@
 package com.example.todomap;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -11,9 +12,9 @@ import com.example.todomap.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static String myTheme;
-    public static String basemap;
-    public static String navigation;
+    public static String myTheme = "light";
+    public static String basemap = "normal";
+    public static String navigation = "foot-walking";
 
     public void setConfig(String theme, String basemap, String navigation){
         this.myTheme = theme;
@@ -40,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.Theme_Dark);
+        }else {
+            setTheme(R.style.Theme_Light);
+        }
 
 
         replaceFragment(new TaskFragment());

@@ -42,6 +42,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.maps.android.data.geojson.GeoJsonLayer;
 import com.google.maps.android.data.geojson.GeoJsonLineStringStyle;
 
@@ -137,16 +138,9 @@ public class MapFragment<theme> extends Fragment {
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull GoogleMap map) {
-//                Intent switchOptions = getActivity().getIntent();
-//                String theme = switchOptions.getStringExtra("themeExtra");
-//                String basemap = switchOptions.getStringExtra("basemapExtra");
+
                 mMap = map;
-                // When map is loaded
-//                if (theme == "normal") {
-//                    mMap.setMapStyle()
-//                }else if (theme == "satellite"){
-//                    mMap.setMapStyle();
-//                }
+
                 if (receivedBasemap == "normal") {
                     mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 }else if (receivedBasemap == "satellite"){
@@ -283,22 +277,29 @@ public class MapFragment<theme> extends Fragment {
         route_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("markerLocation2", "onMarkerClick: "+markerLocation);
-                if (markerClick){
-                    String url =
-                            "https://api.openrouteservice.org/v2/directions/"
-                                    + receivedNavigationMode
-                                    + "?api_key=5b3ce3597851110001cf624841edb16aa15a42e9a8ef6b30efcf721d"
-                                    + "&start="
-                                    + location.getLongitude() + ","
-                                    + location.getLatitude()
-                                    + "&end="
-                                    + markerLocation.longitude + ","
-                                    + markerLocation.latitude;
-                    new DownloadGeoJsonFile().execute(url);
-                    markerLocation = null;
-                    markerClick = false;
+                if (location != null){
+                    Log.d("currentLocation", "onMarkerClick: "+location.getLongitude() + ","+ location.getLatitude());
+                    Log.d("markerLocation2", "onMarkerClick: "+markerLocation);
+                    if (markerClick){
+                        String url =
+                                "https://api.openrouteservice.org/v2/directions/"
+                                        + receivedNavigationMode
+                                        + "?api_key=5b3ce3597851110001cf624841edb16aa15a42e9a8ef6b30efcf721d"
+                                        + "&start="
+                                        + location.getLongitude() + ","
+                                        + location.getLatitude()
+                                        + "&end="
+                                        + markerLocation.longitude + ","
+                                        + markerLocation.latitude;
+                        new DownloadGeoJsonFile().execute(url);
+                        markerLocation = null;
+                        markerClick = false;
+                    }
+
+                }else{
+                    Snackbar.make(view, "Please turn on GPS", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 }
+
             }
         });
 
@@ -322,8 +323,10 @@ public class MapFragment<theme> extends Fragment {
                 return new GeoJsonLayer(mMap, new JSONObject(result.toString()));
             } catch (IOException e) {
                 Log.e("mLogTag", "GeoJSON file could not be read");
+                Snackbar.make(view, "GeoJSON file could not be read", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             } catch (JSONException e) {
                 Log.e("mLogTag", "GeoJSON file could not be converted to a JSONObject");
+                Snackbar.make(view, "GeoJSON file could not be converted to a JSONObject", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
             return null;
         }
