@@ -30,6 +30,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 
 import com.google.android.material.snackbar.Snackbar;
@@ -229,7 +230,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
             }
         };
         Calendar cal = Calendar.getInstance();
-        hour = cal.get(Calendar.HOUR_OF_DAY) + 1;
+        hour = cal.get(Calendar.HOUR_OF_DAY);
         minute = cal.get(Calendar.MINUTE);
 
         int style = AlertDialog.THEME_HOLO_LIGHT;
@@ -252,7 +253,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
     // Now time
     private String getNowTime() {
         Calendar cal = Calendar.getInstance();
-        hour = cal.get(Calendar.HOUR_OF_DAY) + 1;
+        hour = cal.get(Calendar.HOUR_OF_DAY);
         minute = cal.get(Calendar.MINUTE);
         return String.format(Locale.getDefault(), "%02d:%02d", hour, minute);
     }
@@ -282,7 +283,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         if (task_type.equals("Study"))
             return Character.toChars(0x1F4D6);
         if (task_type.equals("Life"))
-            return Character.toChars(0x1F388);
+            return Character.toChars(0x1F3E0);
         if (task_type.equals("Travel"))
             return Character.toChars(0x2708);
         if (task_type.equals("Other"))

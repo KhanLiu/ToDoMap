@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -69,6 +70,7 @@ public class ModifyTaskActivity extends AppCompatActivity implements AdapterView
         setTitle("Modify Todo");
         setContentView(R.layout.activity_modify_task);
 
+        // get data from selected task
         Intent intent = getIntent();
 
         Integer id = intent.getIntExtra("id", 0);
@@ -258,7 +260,7 @@ public class ModifyTaskActivity extends AppCompatActivity implements AdapterView
             }
         };
         Calendar cal = Calendar.getInstance();
-        hour = cal.get(Calendar.HOUR_OF_DAY) + 1;
+        hour = cal.get(Calendar.HOUR_OF_DAY);
         minute = cal.get(Calendar.MINUTE);
 
         int style = AlertDialog.THEME_HOLO_LIGHT;
@@ -291,7 +293,7 @@ public class ModifyTaskActivity extends AppCompatActivity implements AdapterView
         if (task_type.equals("Study"))
             return Character.toChars(0x1F4D6);
         if (task_type.equals("Life"))
-            return Character.toChars(0x1F388);
+            return Character.toChars(0x1F3E0);
         if (task_type.equals("Travel"))
             return Character.toChars(0x2708);
         if (task_type.equals("Other"))
@@ -311,7 +313,7 @@ public class ModifyTaskActivity extends AppCompatActivity implements AdapterView
             return 1;
         if (emoji.equals(new String(Character.toChars(0x1F4D6)))) // Study
             return 2;
-        if (emoji.equals(new String(Character.toChars(0x1F388)))) // Life
+        if (emoji.equals(new String(Character.toChars(0x1F3E0)))) // Life
             return 3;
         if (emoji.equals(new String(Character.toChars(0x2708)))) // Travel
             return 4;

@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.todomap.databinding.ActivityMainBinding;
@@ -42,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // start tutorial activity at the first time
+        firstTime();
+
+        // set style
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
             setTheme(R.style.Theme_Dark);
         }else {
@@ -49,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        // initialize
         replaceFragment(new TaskFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -71,6 +78,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void firstTime() {
+        SharedPreferences sharedTime = getSharedPreferences("tutorial",0);
+        if (sharedTime.getBoolean("firstTime",true))
+        {
+
+            // first time tutorial
+            Intent tutorialIntent = new Intent(this,TutorialActivity.class);
+            startActivity(tutorialIntent);
+
+            sharedTime.edit().putBoolean("firstTime",false).apply();
+        }
+        else
+        {
+            // when not using tutorial
+            replaceFragment(new TaskFragment());
+
+        }
+    }
+
+    // change view
     private void replaceFragment(Fragment fragment){
 
         FragmentManager fragmentManager = getSupportFragmentManager();

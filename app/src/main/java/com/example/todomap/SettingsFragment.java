@@ -3,6 +3,7 @@ package com.example.todomap;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -24,6 +26,7 @@ public class SettingsFragment extends Fragment {
     private String theme = "light";
     private String basemap = "normal";
     private String navigation = "walk";
+    private Button buttonAboutUS, buttonTutorial;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,16 +39,19 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Initialize components
         switchMode = (Switch) view.findViewById(R.id.switchMode);
         switchBaseMap = (Switch) view.findViewById(R.id.switchBaseMap);
         switchNavigation = (Switch) view.findViewById(R.id.switchNavigation);
+        buttonAboutUS = (Button) view.findViewById(R.id.buttonAboutUs);
+        buttonTutorial = (Button) view.findViewById(R.id.buttonHelp);
 
-
+        // Set settings
         String mainTheme = new MainActivity().getMyTheme();
         String mainBasemap = new MainActivity().getBasemap();
         String mainNav = new MainActivity().getNavigation();
         Log.d("SettingFFFFF", "onViewCreated: " + mainTheme + mainBasemap+ mainNav);
-
 
         theme = mainTheme;
         basemap = mainBasemap;
@@ -66,6 +72,8 @@ public class SettingsFragment extends Fragment {
         if (mainNav == "foot-walking")
             switchNavigation.setChecked(false);
 
+        // Switch listeners
+        // select app mode (Light or Dark)
         switchMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -84,6 +92,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        // select basemap layer
         switchBaseMap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -96,6 +105,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        // select navigation mode
         switchNavigation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -106,8 +116,30 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
+
+        // Button click listeners
+        // about us button
+        buttonAboutUS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://github.com/KhanLiu/ToDoMap";
+                Intent aboutUsIntent = new Intent().setAction(Intent.ACTION_VIEW).setData(Uri.parse(url));
+                startActivity(aboutUsIntent);
+            }
+        });
+
+        // tutorial button
+        buttonTutorial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent tutorialIntent = new Intent(getActivity(),TutorialActivity.class);
+                startActivity(tutorialIntent);
+            }
+        });
     }
 
+
+    // Destroy view and store settings
     @Override
     public void onDestroyView() {
         super.onDestroyView();

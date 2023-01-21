@@ -210,7 +210,7 @@ public class MapFragment<theme> extends Fragment {
                             taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.work2logo));
                         if (type.equals(new String(Character.toChars(0x1F4D6)))) // Study
                             taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.study2logo));
-                        if (type.equals(new String(Character.toChars(0x1F388)))) // Life
+                        if (type.equals(new String(Character.toChars(0x1F3E0)))) // Life
                             taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.life2logo));
                         if (type.equals(new String(Character.toChars(0x2708)))) // Travel
                             taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.travel2logo));
