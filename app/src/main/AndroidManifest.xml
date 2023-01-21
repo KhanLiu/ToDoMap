@@ -48,6 +48,12 @@
                 android:value="" />
         </activity>
 
+        <activity android:name=".MapFragment">
+
+        </activity>
+
+
+
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -66,4 +72,5 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

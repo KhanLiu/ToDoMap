@@ -13,6 +13,8 @@ import com.example.todomap.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    int theme;
+    int basemap;
     ActivityMainBinding binding;
 
     @Override

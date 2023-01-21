@@ -10,7 +10,7 @@
         android:shadowColor="@color/design_default_color_primary_dark"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:paddingRight="0dp"
+        android:layout_marginLeft="10dp"
         android:hint="Enter an Address here"/>
 
     <ImageButton
@@ -19,9 +19,9 @@
         android:layout_height="60dp"
         android:layout_toLeftOf="@id/add_on_map_btn"
         android:src="@drawable/search_icon"
-        android:scaleType="fitCenter"/>
-<!--        android:onClick="onClickSearchAddress"-->
-<!--        android:text="Search"/>-->
+        android:scaleType="fitCenter"
+        android:background="@color/white"
+        android:padding="10dp"/>
 
     <ImageButton
         android:id="@+id/add_on_map_btn"
@@ -29,16 +29,19 @@
         android:layout_height="60dp"
         android:layout_toLeftOf="@id/route_btn"
         android:src="@drawable/add_icon"
-        android:scaleType="fitCenter"/>
-<!--        android:onClick="onClickAddAddress"-->
-<!--        android:text="Add"/>-->
+        android:scaleType="fitCenter"
+        android:background="@color/white"
+        android:padding="10dp"/>
+
     <ImageButton
         android:id="@+id/route_btn"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentRight="true"
         android:src="@drawable/route_icon"
-        android:scaleType="fitCenter"/>
+        android:scaleType="fitCenter"
+        android:background="@color/white"
+        android:padding="10dp"/>
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map"
