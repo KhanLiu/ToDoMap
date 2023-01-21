@@ -137,7 +137,7 @@ public class MapFragment<theme> extends Fragment {
             public void onMapReady(@NonNull GoogleMap map) {
 
                 mMap = map;
-
+                mMap.setMaxZoomPreference(16.0f);
                 mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.light));
                 // When map is loaded
                 if (receivedTheme == "light") {
@@ -222,7 +222,7 @@ public class MapFragment<theme> extends Fragment {
                             final LatLng taskMarkerLocation = new LatLng(lat, lon);
                             taskMarkerOption.position(taskMarkerLocation);
                             taskMarkerOption.anchor(0.5f,1);
-                            taskMarkerOption.title("Task:" + cursor.getString(1));
+                            taskMarkerOption.title(cursor.getString(1));
                             mMap.addMarker(taskMarkerOption);
                             builder.include(taskMarkerLocation);
                         }
@@ -274,6 +274,7 @@ public class MapFragment<theme> extends Fragment {
                     MarkerOptions newMarkerOption = new MarkerOptions();
                     newMarkerOption.position(newMarkerLocation);
                     newMarkerOption.title("New Task");
+                    newMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.toadd2logo));
                     mMap.addMarker(newMarkerOption);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(newMarkerLocation));
                 }
