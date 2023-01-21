@@ -40,6 +40,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.data.geojson.GeoJsonLayer;
@@ -70,8 +71,6 @@ public class MapFragment<theme> extends Fragment {
     boolean markerClick;
     private String receivedTheme, receivedBasemap, receivedNavigationMode;
 
-//    FusedLocationProviderClient client;
-//    String mode = "foot-walking";
     ActivityResultLauncher<String[]> locationPermissionRequest;
 
     @Override
@@ -109,8 +108,6 @@ public class MapFragment<theme> extends Fragment {
 
         SupportMapFragment supportMapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.map);
-//        client = LocationServices.getFusedLocationProviderClient(getActivity());
-//        location = client.getCurrentLocation();
         LocationListener locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location0) {
@@ -142,11 +139,11 @@ public class MapFragment<theme> extends Fragment {
 //                String basemap = switchOptions.getStringExtra("basemapExtra");
                 mMap = map;
                 // When map is loaded
-//                if (theme == "normal") {
-//                    mMap.setMapStyle()
-//                }else if (theme == "satellite"){
-//                    mMap.setMapStyle();
-//                }
+                if (receivedTheme == "light") {
+                    mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.light));
+                }else if (receivedTheme == "dark"){
+                    mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.dark));
+                }
                 if (receivedBasemap == "normal") {
                     mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 }else if (receivedBasemap == "satellite"){
@@ -205,10 +202,24 @@ public class MapFragment<theme> extends Fragment {
                     for (int i = 0; i < cursor.getCount(); i++) {
                         double lat = cursor.getDouble(5);
                         double lon = cursor.getDouble(6);
+                        String type = cursor.getString(2);
+                        if (type.equals(new String(Character.toChars(0x1F4CB)))) // All
+                            taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.all2logo));
+                        if (type.equals(new String(Character.toChars(0x1F4BC)))) // Work
+                            taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.work2logo));
+                        if (type.equals(new String(Character.toChars(0x1F4D6)))) // Study
+                            taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.study2logo));
+                        if (type.equals(new String(Character.toChars(0x1F388)))) // Life
+                            taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.life2logo));
+                        if (type.equals(new String(Character.toChars(0x2708)))) // Travel
+                            taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.travel2logo));
+                        if (type.equals(new String(Character.toChars(0x1F30D)))) // Other
+                            taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.other2logo));
+                        if (type.equals(new String(Character.toChars(0x2714)))) // Done
+                            taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.done2logo));
                         if (lat != 0 && lon != 0) {
                             final LatLng taskMarkerLocation = new LatLng(lat, lon);
                             taskMarkerOption.position(taskMarkerLocation);
-                            taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.all2logo));
                             taskMarkerOption.anchor(0.5f,1);
                             taskMarkerOption.title("Task:" + cursor.getString(1));
                             mMap.addMarker(taskMarkerOption);
