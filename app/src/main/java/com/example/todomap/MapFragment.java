@@ -138,6 +138,7 @@ public class MapFragment<theme> extends Fragment {
 //                String theme = switchOptions.getStringExtra("themeExtra");
 //                String basemap = switchOptions.getStringExtra("basemapExtra");
                 mMap = map;
+                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.light));
                 // When map is loaded
                 if (receivedTheme == "light") {
                     mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.light));
