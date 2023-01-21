@@ -78,7 +78,7 @@
         android:textSize="20dp"
         android:showText="true"
         android:textOff="Walk"
-        android:textOn="Car"
+        android:textOn="Drive"
         android:paddingHorizontal="20dp"
         android:paddingVertical="10dp"/>
 

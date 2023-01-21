@@ -11,8 +11,28 @@ import com.example.todomap.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    int theme;
-    int basemap;
+    public static String myTheme;
+    public static String basemap;
+    public static String navigation;
+
+    public void setConfig(String theme, String basemap, String navigation){
+        this.myTheme = theme;
+        this.basemap = basemap;
+        this.navigation = navigation;
+    }
+
+    public String getNavigation() {
+        return navigation;
+    }
+
+    public String getBasemap() {
+        return basemap;
+    }
+
+    public String getMyTheme() {
+        return myTheme;
+    }
+
     ActivityMainBinding binding;
 
     @Override
