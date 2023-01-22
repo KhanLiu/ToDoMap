@@ -55,6 +55,16 @@ Give full play to your imagination to use **ToDoMap**, combine your daily life w
 
 #### 4.1 Task SQLite Database
 
+Here is the structure and datatype of SQLite database, which will be created locally on the device when user firstly install **ToDoMap**.
+
+| _id                               | title         | type | time | address | latitude | longitude | description |
+|-----------------------------------|---------------|------|------|---------|----------|-----------|-------------|
+| INTEGER PRIMARY KEY AUTOINCREMENT | TEXT NOT NULL | TEXT | TEXT | TEXT    | DOUBLE   | DOUBLE    | TEXT        |
+
+After tasks created, the data in database looks like:
+
+![database](./img/database_local.png)
+
 #### 4.2 Fragment-based Bottom Navigation
 
 #### 4.3 Google Map Integration
