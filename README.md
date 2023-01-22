@@ -26,25 +26,40 @@ Give full play to your imagination to use **ToDoMap**, combine your daily life w
 
 ## 3. Main Features
 
-### 3.1 Add Taks
+### 3.1 Task List
 
-<img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/addTask1.png" width="500">
-<img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/addTask2.png" width="500">
-<img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/addTask3.png" width="500">
+- Add a new task
+- Update your task
+- Mark your task as done
+- Delete your task
 
-### 3.2 Task View
+![addTask1](./img/tutorials/addTask1.png)
+![addTask2](./img//tutorials/addTask2.png)
+![addTask3](./img/tutorials/addTask3.png)
+![taskPage](./img//tutorials/taskPage.png)
 
-<img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/taskPage.png" width="500">
+### 3.2 Task Map
 
-### 3.3 Map View
+- Display all of tasks on the map
+- Create a new task from map (by clicking or searching)
+- Navigate to your next task
 
-<img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/mapPage.png" width="500">
-<img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/navigation.png" width="500">
+![mapPage](./img/tutorials/mapPage.png)
+![navigation](./img/tutorials/navigation.png)
 
-### 3.4 Settings View
+### 3.3 Custom Style
 
-<img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/settingsPage.png" width="500">
-<img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/dark.png" width="500">
+- Change app mode (Day or Night)
+- Change basemap style
+- Change navigation mode
+
+![settings](./img/tutorials/settingsPage.png)
+![dark](./img/tutorials/dark.png)
+
+### 3.4 Auxiliary
+
+- App tutorial
+- About us
 
 ## 4. Development
 
