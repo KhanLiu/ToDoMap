@@ -2,6 +2,10 @@
 An map-based app with to do list to manage your life easily.
 
 ### Introduction
+Have you ever experienced that when you have a lot of tasks to do but you don’t know which one to start and how to plan your daily journey? Have you ever 
+experienced that when you want to search the location of your next work place but you have to switch different apps and copy paste many times? Here is why 
+our ToDoMap comes out. This application aims to help users manage their work and life easily by visualizing todo tasks on a map.
+
 This app is the course project of the <Mobile Cartography> course within the framework of Cartography M.Sc. Programme.
 
 ### The requirements to be implemented:

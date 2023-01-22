@@ -287,7 +287,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         if (task_type.equals("Travel"))
             return Character.toChars(0x2708);
         if (task_type.equals("Other"))
-            return Character.toChars(0x1F30D);
+            return Character.toChars(0x1F310);
         if (task_type.equals("Done"))
             return Character.toChars(0x2714);
         return Character.toChars(0x1F4CB);

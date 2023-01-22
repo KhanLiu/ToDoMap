@@ -214,7 +214,7 @@ public class MapFragment<theme> extends Fragment {
                             taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.life2logo));
                         if (type.equals(new String(Character.toChars(0x2708)))) // Travel
                             taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.travel2logo));
-                        if (type.equals(new String(Character.toChars(0x1F30D)))) // Other
+                        if (type.equals(new String(Character.toChars(0x1F310)))) // Other
                             taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.other2logo));
                         if (type.equals(new String(Character.toChars(0x2714)))) // Done
                             taskMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.done2logo));
