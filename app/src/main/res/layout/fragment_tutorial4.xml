@@ -4,20 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/background_color"
-    tools:context=".TutorialFragment1">
+    tools:context=".TutorialFragment4">
 
-    <!-- TODO: Update blank fragment layout -->
+<!--    &lt;!&ndash; TODO: Update blank fragment layout &ndash;&gt;-->
 <!--    <TextView-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent"-->
-<!--        android:text="TAB 1"-->
+<!--        android:text="TAB 4"-->
 <!--        android:gravity="center"-->
 <!--        android:textColor="?attr/text_color"-->
 <!--        android:textSize="18dp"/>-->
-    
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/addtask1"/>
+        android:src="@drawable/taskpage"/>
 
 </FrameLayout>

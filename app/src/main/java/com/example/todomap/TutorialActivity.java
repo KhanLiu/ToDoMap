@@ -31,9 +31,12 @@ public class TutorialActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        viewPagerAdapter.addFragment(new TutorialFragment1(), "TASK");
-        viewPagerAdapter.addFragment(new TutorialFragment2(), "MAP");
-        viewPagerAdapter.addFragment(new TutorialFragment3(), "Settings");
+        viewPagerAdapter.addFragment(new TutorialFragment1(), "1");
+        viewPagerAdapter.addFragment(new TutorialFragment2(), "2");
+        viewPagerAdapter.addFragment(new TutorialFragment3(), "3");
+        viewPagerAdapter.addFragment(new TutorialFragment4(), "4");
+        viewPagerAdapter.addFragment(new TutorialFragment5(), "5");
+        viewPagerAdapter.addFragment(new TutorialFragment6(), "6");
         viewPager.setAdapter(viewPagerAdapter);
 
     }
