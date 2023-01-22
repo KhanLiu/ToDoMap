@@ -67,11 +67,27 @@ After tasks created, the data in database looks like:
 
 #### 4.2 Fragment-based Bottom Navigation
 
+The main activity of **ToDoMap** consists of three fragments (task view, map view, settings view), and uses a bottom navigation bar to manage different views. The app framework was shown in the following figure.
+
+![todomap_framework](./img/todomap_framework.png)
+
+
 #### 4.3 Google Map Integration
+
+**ToDoMap** implement the map view by [Google Maps SDK for Android](https://developers.google.com/maps/documentation/android-sdk/overview?section=tools), and implement the navigation by [OpenRouteService](https://openrouteservice.org/).
 
 #### 4.3 Custom Design
 
+**ToDoMap** provides different custom design that user can select, like app styles (light or dark), basemap (normal or satellite), map style (light or dark).
+
 #### 4.4 Further Development
+
+There are more features are expected to implement in the future.
+
+- Sort/search tasks by time or address
+- Custom task type and custom icon
+- Task group view
+- Better UI
 
 ## 5. Contribution
 
