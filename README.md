@@ -33,10 +33,15 @@ Give full play to your imagination to use **ToDoMap**, combine your daily life w
 - Mark your task as done
 - Delete your task
 
-![addTask1](./img/tutorials/addTask1.png)
-![addTask2](./img//tutorials/addTask2.png)
+<!-- ![addTask1](./img/tutorials/addTask1.png) -->
+<!-- ![addTask2](./img//tutorials/addTask2.png)
 ![addTask3](./img/tutorials/addTask3.png)
-![taskPage](./img//tutorials/taskPage.png)
+![taskPage](./img//tutorials/taskPage.png) -->
+
+<img src="./img/tutorials/addTask1.png" height = 400 />
+<img src="./img/tutorials/addTask2.png" height = 400 />
+<img src="./img/tutorials/addTask3.png" height = 400 />
+<img src="./img/tutorials/taskPage.png" height = 400 />
 
 ### 3.2 Task Map
 
@@ -44,8 +49,11 @@ Give full play to your imagination to use **ToDoMap**, combine your daily life w
 - Create a new task from map (by clicking or searching)
 - Navigate to your next task
 
-![mapPage](./img/tutorials/mapPage.png)
-![navigation](./img/tutorials/navigation.png)
+<img src="./img/tutorials/mapPage.png" height = 400 />
+<img src="./img/tutorials/navigation.png" height = 400 />
+
+<!-- ![mapPage](./img/tutorials/mapPage.png)
+![navigation](./img/tutorials/navigation.png) -->
 
 ### 3.3 Custom Style
 
@@ -53,8 +61,11 @@ Give full play to your imagination to use **ToDoMap**, combine your daily life w
 - Change basemap style
 - Change navigation mode
 
-![settings](./img/tutorials/settingsPage.png)
-![dark](./img/tutorials/dark.png)
+<img src="./img/tutorials/settingsPage.png" height = 400 />
+<img src="./img/tutorials/dark.png" height = 400 />
+
+<!-- ![settings](./img/tutorials/settingsPage.png)
+![dark](./img/tutorials/dark.png) -->
 
 ### 3.4 Auxiliary
 
@@ -79,7 +90,9 @@ After tasks created, the data in database looks like:
 
 The main activity of **ToDoMap** consists of three fragments (task view, map view, settings view), and uses a bottom navigation bar to manage different views. The app framework was shown in the following figure.
 
-![todomap_framework](./img/todomap_framework.png)
+<!-- ![todomap_framework](./img/todomap_framework.png) -->
+
+<img src="./img/todomap_framework.png" width = 500 />
 
 
 ### 4.3 Google Map Integration
