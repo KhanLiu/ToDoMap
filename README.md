@@ -26,30 +26,39 @@ Give full play to your imagination to use **ToDoMap**, combine your daily life w
 
 ## 3. Main Features
 
-#### 3.1 Task List
+#### 3.1 Add Taks
+
+![image](https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/addTask1.png)
+![image](https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/addTask2.png)
+![image](https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/addTask3.png)
+
+#### 3.2 Task View
+
+![image](https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/taskPage.png)
 
 - Add a new task 
 - Update your task
 - Mark your task as done
 - Delete your task
 
-#### 3.2 Task Map
+#### 3.3 Map View
+
+![image](https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/mapPage.png)
+![image](https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/navigation.png)
 
 - Display all of tasks on the map
-- Create a new task from map (by clicking or searching)
 - Navigate to your next task
 
-#### 3.3 Custom Style
+#### 3.4 Settings View
+
+![image](https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/settingsPage.png)
+![image](https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/dark.png)
 
 - Change app mode (Day or Night)
 - Change basemap style
 - Change navigation mode
-
-#### 3.4 Auxiliary
-
 - App tutorial
 - About us
-
 
 ## 4. Development
 
