@@ -28,7 +28,8 @@ Give full play to your imagination to use **ToDoMap**, combine your daily life w
 
 #### 3.1 Add Taks
 
-![image](https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/addTask1.png = 100 x)
+![image](https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/addTask1.png)
+<img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/addTask1.png" width="250">
 ![image](https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/addTask2.png)
 ![image](https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/addTask3.png)
 
