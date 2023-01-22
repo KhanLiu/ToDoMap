@@ -26,29 +26,29 @@ Give full play to your imagination to use **ToDoMap**, combine your daily life w
 
 ## 3. Main Features
 
-#### 3.1 Add Taks
+### 3.1 Add Taks
 
 <img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/addTask1.png" width="500">
 <img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/addTask2.png" width="500">
 <img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/addTask3.png" width="500">
 
-#### 3.2 Task View
+### 3.2 Task View
 
 <img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/taskPage.png" width="500">
 
-#### 3.3 Map View
+### 3.3 Map View
 
 <img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/mapPage.png" width="500">
 <img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/navigation.png" width="500">
 
-#### 3.4 Settings View
+### 3.4 Settings View
 
 <img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/settingsPage.png" width="500">
 <img src="https://github.com/KhanLiu/ToDoMap/blob/main/img/tutorials/dark.png" width="500">
 
 ## 4. Development
 
-#### 4.1 Task SQLite Database
+### 4.1 Task SQLite Database
 
 Here is the structure and datatype of SQLite database, which will be created locally on the device when user firstly install **ToDoMap**.
 
@@ -60,22 +60,22 @@ After tasks created, the data in database looks like:
 
 ![database](./img/database_local.png)
 
-#### 4.2 Fragment-based Bottom Navigation
+### 4.2 Fragment-based Bottom Navigation
 
 The main activity of **ToDoMap** consists of three fragments (task view, map view, settings view), and uses a bottom navigation bar to manage different views. The app framework was shown in the following figure.
 
 ![todomap_framework](./img/todomap_framework.png)
 
 
-#### 4.3 Google Map Integration
+### 4.3 Google Map Integration
 
 **ToDoMap** implement the map view by [Google Maps SDK for Android](https://developers.google.com/maps/documentation/android-sdk/overview?section=tools), and implement the navigation by [OpenRouteService](https://openrouteservice.org/).
 
-#### 4.3 Custom Design
+### 4.4 Custom Design
 
 **ToDoMap** provides different custom design that user can select, like app styles (light or dark), basemap (normal or satellite), map style (light or dark).
 
-#### 4.4 Further Development
+### 4.5 Further Development
 
 There are more features are expected to implement in the future.
 
